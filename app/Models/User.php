@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -39,6 +40,37 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      *
      * @return array<string, string>
      */
+
+    /**
+     * Get the vehicles associated with the user.
+     *
+     * @return HasMany<Vehicle, $this>
+     */
+
+    public function getVehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
+    /**
+     * Get the payments associated with the user.
+     *
+     * @return HasMany<Appointment, $this>
+     */
+    public function getAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * Get the repair orders assigned to the user as a mechanic.
+     *
+     * @return HasMany<RepairOrder, $this>
+     */
+    public function getRepairOrders(): HasMany
+    {
+        return $this->hasMany(RepairOrder::class, 'mechanic_id');
+    }
     protected function casts(): array
     {
         return [
