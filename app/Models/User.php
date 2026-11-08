@@ -46,7 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      *
      * @return HasMany<Vehicle, $this>
      */
-
     public function getVehicles(): HasMany
     {
         return $this->hasMany(Vehicle::class);
@@ -71,6 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     {
         return $this->hasMany(RepairOrder::class, 'mechanic_id');
     }
+
     protected function casts(): array
     {
         return [

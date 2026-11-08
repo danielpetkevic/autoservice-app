@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\RepairOrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RepairOrder extends Model
 {
-    /** @use HasFactory<\Database\Factories\RepairOrderFactory> */
+    /** @use HasFactory<RepairOrderFactory> */
     use HasFactory;
+
     /**
-     * 
      * @return HasMany<Payment, $this>
      */
     public function getPayments(): HasMany
@@ -21,15 +22,14 @@ class RepairOrder extends Model
     }
 
     /**
-     * 
      * @return HasMany<RepairService, $this>
      */
     public function getRepairServices(): HasMany
     {
         return $this->hasMany(RepairService::class);
     }
+
     /**
-     * 
      * @return HasMany<RepairPart, $this>
      */
     public function getRepairParts(): HasMany
