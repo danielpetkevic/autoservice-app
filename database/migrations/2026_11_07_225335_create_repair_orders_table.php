@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('appointment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('mechanic_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mechanic_id')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('in_progress');
             $table->string('diagnosis')->nullable();
             $table->text('repair_notes')->nullable();
