@@ -16,7 +16,7 @@ class RepairOrder extends Model
     /**
      * @return HasMany<Payment, $this>
      */
-    public function getPayments(): HasMany
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
@@ -24,7 +24,7 @@ class RepairOrder extends Model
     /**
      * @return HasMany<RepairService, $this>
      */
-    public function getRepairServices(): HasMany
+    public function repairServices(): HasMany
     {
         return $this->hasMany(RepairService::class);
     }
@@ -32,7 +32,7 @@ class RepairOrder extends Model
     /**
      * @return HasMany<RepairPart, $this>
      */
-    public function getRepairParts(): HasMany
+    public function repairParts(): HasMany
     {
         return $this->hasMany(RepairPart::class);
     }
@@ -48,7 +48,7 @@ class RepairOrder extends Model
     /**
      * @return BelongsTo<Appointment, $this>
      */
-    public function getAppointment(): BelongsTo
+    public function appointment(): BelongsTo
     {
         return $this->belongsTo(Appointment::class);
     }

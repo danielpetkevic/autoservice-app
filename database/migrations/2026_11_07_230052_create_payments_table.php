@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('repair_order_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 10, 2);
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');
             $table->dateTime('paid_at')->nullable();
         });

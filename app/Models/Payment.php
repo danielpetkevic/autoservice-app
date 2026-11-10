@@ -15,7 +15,7 @@ class Payment extends Model
     /**
      * @return BelongsTo<RepairOrder, $this>
      */
-    public function getRepairOrder(): BelongsTo
+    public function repairOrder(): BelongsTo
     {
         return $this->belongsTo(RepairOrder::class);
     }

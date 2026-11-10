@@ -17,7 +17,7 @@ class ServiceCategory extends Model
      *
      * @return HasMany<Service, $this>
      */
-    public function getServices(): HasMany
+    public function services(): HasMany
     {
         return $this->hasMany(Service::class);
     }

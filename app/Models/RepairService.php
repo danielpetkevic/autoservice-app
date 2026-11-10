@@ -15,7 +15,7 @@ class RepairService extends Model
     /**
      * @return BelongsTo<Service, $this>
      */
-    public function getService(): BelongsTo
+    public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
@@ -23,7 +23,7 @@ class RepairService extends Model
     /**
      * @return BelongsTo<RepairOrder, $this>
      */
-    public function getRepairOrder(): BelongsTo
+    public function repairOrder(): BelongsTo
     {
         return $this->belongsTo(RepairOrder::class);
     }

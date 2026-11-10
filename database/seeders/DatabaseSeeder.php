@@ -2,7 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
+use App\Models\Part;
+use App\Models\Payment;
+use App\Models\RepairOrder;
+use App\Models\RepairPart;
+use App\Models\RepairService;
+use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +24,68 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+        ]);
+        User::factory()->create([
+            'name' => 'Mechanic User',
+            'email' => 'mechanic@example.com',
+            'role' => 'mechanic',
+        ]);
+        User::factory()->create([
+            'name' => 'Customer User',
+            'email' => 'customer@example.com',
+            'role' => 'customer',
+        ]);
+
+        ServiceCategory::factory(5)->create();
+        Part::factory(10)->create();
+
+        $customerUser = User::where('role', 'customer')->first();
+        $mechanicUser = User::where('role', 'mechanic')->first();
+
+        Vehicle::factory(5)->create([
+            'user_id' => $customerUser->id,
+        ]);
+
+        Service::factory(10)->create(
+            [
+                'category_id' => ServiceCategory::inRandomOrder()->first()->id,
+            ]
+        );
+
+        $appointments = Appointment::factory(5)->create([
+            'vehicle_id' => Vehicle::inRandomOrder()->first()->id,
+            'user_id' => $customerUser->id,
+        ]);
+
+        $services = Service::pluck('id');
+
+        foreach ($appointments as $appointment) {
+            $appointment->services()->attach(
+                $services->random(random_int(1, 3))
+            );
+        }
+
+        RepairOrder::factory(5)->create([
+            'appointment_id' => Appointment::inRandomOrder()->first()->id,
+            'mechanic_id' => $mechanicUser->id,
+        ]);
+
+        Payment::factory(5)->create([
+            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
+        ]);
+
+        RepairService::factory(5)->create([
+            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
+            'service_id' => Service::inRandomOrder()->first()->id,
+        ]);
+
+        RepairPart::factory(15)->create([
+            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
+            'part_id' => Part::inRandomOrder()->first()->id,
         ]);
     }
 }

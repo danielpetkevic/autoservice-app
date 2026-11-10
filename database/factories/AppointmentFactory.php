@@ -18,7 +18,16 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'vehicle_id' => 1,
+            'user_id' => 1,
+            'appointment_at' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
+            'status' => $this->faker->randomElement(['pending', 'confirmed', 'completed', 'cancelled']),
+            'notes' => $this->faker->optional()->randomElement([
+                'Customer reports a warning light on the dashboard.',
+                'Please inspect the brakes and suspension.',
+                'Vehicle needs a full seasonal inspection.',
+                'Customer will wait at the service center.',
+            ]),
         ];
     }
 }

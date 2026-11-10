@@ -18,7 +18,10 @@ class RepairPartFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'repair_order_id' => 1,
+            'part_id' => 1,
+            'quantity' => $this->faker->numberBetween(1, 4),
+            'unit_price' => $this->faker->randomFloat(2, 8, 450),
         ];
     }
 }

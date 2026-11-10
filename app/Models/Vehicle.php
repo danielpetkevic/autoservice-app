@@ -16,7 +16,7 @@ class Vehicle extends Model
     /**
      * @return BelongsTo<User, $this>
      */
-    public function getUser(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -26,7 +26,7 @@ class Vehicle extends Model
      *
      * @return HasMany<Appointment, $this>
      */
-    public function getAppointments(): HasMany
+    public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
     }

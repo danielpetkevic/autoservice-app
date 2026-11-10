@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      *
      * @return HasMany<Vehicle, $this>
      */
-    public function getVehicles(): HasMany
+    public function vehicles(): HasMany
     {
         return $this->hasMany(Vehicle::class);
     }
@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      *
      * @return HasMany<Appointment, $this>
      */
-    public function getAppointments(): HasMany
+    public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
     }
@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
      *
      * @return HasMany<RepairOrder, $this>
      */
-    public function getRepairOrders(): HasMany
+    public function repairOrders(): HasMany
     {
         return $this->hasMany(RepairOrder::class, 'mechanic_id');
     }

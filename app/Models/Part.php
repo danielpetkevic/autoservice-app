@@ -15,7 +15,7 @@ class Part extends Model
     /**
      * @return HasMany<RepairPart, $this>
      */
-    public function getRepairParts(): HasMany
+    public function repairParts(): HasMany
     {
         return $this->HasMany(RepairPart::class);
     }

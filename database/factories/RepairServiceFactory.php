@@ -18,7 +18,15 @@ class RepairServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'repair_order_id' => 1,
+            'service_id' => 1,
+            'quantity' => $this->faker->numberBetween(1, 3),
+            'unit_price' => $this->faker->randomFloat(2, 25, 350),
+            'notes' => $this->faker->optional()->randomElement([
+                'Service completed according to manufacturer specifications.',
+                'Additional inspection recommended during the next visit.',
+                'Customer approved the work before repair started.',
+            ]),
         ];
     }
 }

@@ -17,8 +17,18 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
+        $status = $this->faker->randomElement(['pending', 'completed', 'failed']);
+
         return [
-            //
+            'repair_order_id' => 1,
+            'amount' => $this->faker->randomFloat(2, 50, 1500),
+            'payment_method' => $status === 'completed'
+                ? $this->faker->randomElement(['cash', 'card', 'bank_transfer'])
+                : null,
+            'paid_at' => $status === 'completed'
+                ? $this->faker->dateTimeBetween('-1 month', 'now')
+                : null,
+            'status' => $status,
         ];
     }
 }

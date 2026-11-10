@@ -17,7 +17,7 @@ class Service extends Model
     /**
      * @return BelongsTo<ServiceCategory, $this>
      */
-    public function getServiceCategory(): BelongsTo
+    public function serviceCategory(): BelongsTo
     {
         return $this->belongsTo(ServiceCategory::class);
     }
@@ -25,7 +25,7 @@ class Service extends Model
     /**
      * @return BelongsToMany<Appointment, $this>
      */
-    public function getAppointments(): BelongsToMany
+    public function appointments(): BelongsToMany
     {
         return $this->belongsToMany(Appointment::class, 'appointment_services');
     }
@@ -33,7 +33,7 @@ class Service extends Model
     /**
      * @return HasMany<RepairService, $this>
      */
-    public function getRepairServices(): HasMany
+    public function repairServices(): HasMany
     {
         return $this->hasMany(RepairService::class);
     }
