@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Vehicle;
-use App\Models\Appointment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

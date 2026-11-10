@@ -36,7 +36,7 @@ class RepairOrderFactory extends Factory
                 'Customer was informed about the required repair work.',
             ]),
             'start_date' => $this->faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d'),
-            'completion_date' => 'status' === 'completed'
+            'completion_date' => $status === 'completed'
                 ? $this->faker->dateTimeBetween('now', '+1 month')->format('Y-m-d')
                 : null,
         ];
