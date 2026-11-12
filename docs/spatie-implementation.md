@@ -1,6 +1,6 @@
 # Spatie Permission Integration
 
-The application uses Spatie Laravel Permission v8 with the published permission configuration and migrations. `App\Models\User` uses `HasRoles`, while the legacy enum-backed `users.role` attribute remains available for compatibility.
+The application uses Spatie Laravel Permission v8 with the published permission configuration and migrations. `App\Models\User` uses `HasRoles`; the legacy `users.role` column and enum have been removed.
 
 Use Spatie methods for new authorization decisions:
 

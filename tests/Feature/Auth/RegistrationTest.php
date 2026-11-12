@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserRole;
 use App\Models\User;
 use Laravel\Fortify\Features;
 
@@ -23,6 +22,6 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    expect(User::first()->role)->toBe(UserRole::CLIENT);
+    expect(User::first()->hasRole('client'))->toBeTrue();
     $response->assertRedirect(route('dashboard', absolute: false));
 });

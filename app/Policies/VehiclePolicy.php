@@ -9,44 +9,58 @@ class VehiclePolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isClient() || $user->isMechanic();
+        return $user->can('vehicles.view');
     }
 
     public function view(User $user, Vehicle $vehicle): bool
     {
-        if ($user->isAdmin()) {
+        if (!$user->can('vehicles.view')) {
+            return false;
+        }
+
+        if ($user->hasRole('admin')) {
             return true;
         }
 
-        if ($user->isClient()) {
+        if ($user->hasRole('client')) {
             return $vehicle->user_id === $user->id;
         }
 
-        return $user->isMechanic()
+        return $user->hasRole('mechanic')
             && $vehicle->appointments()
-                ->whereHas('repairOrder', fn ($query) => $query->where('mechanic_id', $user->id))
+                ->whereHas('repairOrder', fn($query) => $query->where('mechanic_id', $user->id))
                 ->exists();
     }
 
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isClient();
+        if(!$user->can('vehicles.create')) {
+            return false;
+        }
+    
+        return $user->hasAnyRole('admin|client');
     }
 
     public function update(User $user, Vehicle $vehicle): bool
     {
-        return $user->isAdmin()
-            || ($user->isClient() && $vehicle->user_id === $user->id);
+        if(!$user->can('vehicles.update')) {
+            return false;
+        }
+        return $user->hasRole('admin') || ($user->hasRole('client') && $vehicle->user_id === $user->id);
     }
 
     public function delete(User $user, Vehicle $vehicle): bool
     {
-        if ($user->isAdmin()) {
+        if(!$user->can('vehicles.delete')) {
+            return false;
+        }
+
+        if ($user->hasRole('admin')) {
             return true;
         }
 
-        return $user->isClient()
+        return $user->hasRole('client')
             && $vehicle->user_id === $user->id
-            && ! $vehicle->appointments()->exists();
+            && !$vehicle->appointments()->exists();
     }
 }

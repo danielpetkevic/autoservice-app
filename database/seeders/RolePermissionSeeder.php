@@ -5,51 +5,87 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = [];
-        foreach (['admin', 'mechanic', 'client'] as $roleName) {
-            $roles[$roleName] = Role::firstOrCreate([
-                'name' => $roleName,
-                'guard_name' => 'web',
-            ]);
-        }
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $permissions = [
-            'view vehicles',
-            'create vehicles',
-            'update vehicles',
-            'delete vehicles',
-            'view appointments',
-            'manage appointments',
-            'view repair orders',
-            'manage repair orders',
-            'manage users',
+            // Vehicles
+            'vehicles.view',
+            'vehicles.create',
+            'vehicles.update',
+            'vehicles.delete',
+
+            // Appointments
+            'appointments.view',
+            'appointments.create',
+            'appointments.update',
+            'appointments.cancel',
+            'appointments.confirm',
+            'appointments.delete',
+            'appointments.select-services',
+
+            // Repair orders
+            'repair-orders.view',
+            'repair-orders.create',
+            'repair-orders.update',
+            'repair-orders.delete',
+
+            // Users
+            'users.manage',
         ];
 
-        foreach ($permissions as $permissionName) {
+        foreach ($permissions as $permission) {
             Permission::firstOrCreate([
-                'name' => $permissionName,
+                'name' => $permission,
                 'guard_name' => 'web',
             ]);
         }
 
-        $roles['admin']->syncPermissions($permissions);
-        $roles['mechanic']->syncPermissions([
-            'view vehicles',
-            'view appointments',
-            'view repair orders',
-            'manage repair orders',
+        $admin = Role::firstOrCreate([
+            'name' => 'admin',
+            'guard_name' => 'web',
         ]);
-        $roles['client']->syncPermissions([
-            'view vehicles',
-            'create vehicles',
-            'update vehicles',
-            'delete vehicles',
-            'view appointments',
+
+        $mechanic = Role::firstOrCreate([
+            'name' => 'mechanic',
+            'guard_name' => 'web',
         ]);
+
+        $client = Role::firstOrCreate([
+            'name' => 'client',
+            'guard_name' => 'web',
+        ]);
+
+        // Admin
+        $admin->syncPermissions($permissions);
+
+        // Mechanic
+        $mechanic->syncPermissions([
+            'vehicles.view',
+            'appointments.view',
+            'repair-orders.view',
+            'repair-orders.update',
+        ]);
+
+        // Client
+        $client->syncPermissions([
+            'vehicles.view',
+            'vehicles.create',
+            'vehicles.update',
+            'vehicles.delete',
+            'appointments.view',
+            'appointments.create',
+            'appointments.update',
+            'appointments.cancel',
+            'appointments.select-services',
+            'repair-orders.view',
+        ]);
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }

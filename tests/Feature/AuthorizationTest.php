@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserRole;
 use App\Models\Appointment;
 use App\Models\RepairOrder;
 use App\Models\User;
@@ -10,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('admin can access the admin dashboard', function () {
-    $admin = User::factory()->create(['role' => UserRole::ADMIN]);
+    $admin = User::factory()->admin()->create();
 
     $this->actingAs($admin)
         ->get(route('dashboard'))
@@ -18,7 +17,7 @@ test('admin can access the admin dashboard', function () {
 });
 
 test('clients access their client dashboard', function () {
-    $client = User::factory()->create(['role' => UserRole::CLIENT]);
+    $client = User::factory()->client()->create();
 
     $this->actingAs($client)
         ->get(route('dashboard'))
@@ -27,7 +26,7 @@ test('clients access their client dashboard', function () {
 });
 
 test('a client can view their own vehicle', function () {
-    $client = User::factory()->create(['role' => UserRole::CLIENT]);
+    $client = User::factory()->client()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);
 
     $this->actingAs($client)
@@ -36,8 +35,8 @@ test('a client can view their own vehicle', function () {
 });
 
 test('a client cannot view another clients vehicle', function () {
-    $owner = User::factory()->create(['role' => UserRole::CLIENT]);
-    $otherClient = User::factory()->create(['role' => UserRole::CLIENT]);
+    $owner = User::factory()->client()->create();
+    $otherClient = User::factory()->client()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $owner->id]);
 
     $this->actingAs($otherClient)
@@ -46,8 +45,8 @@ test('a client cannot view another clients vehicle', function () {
 });
 
 test('a mechanic can view a vehicle connected to an assigned repair', function () {
-    $client = User::factory()->create(['role' => UserRole::CLIENT]);
-    $mechanic = User::factory()->create(['role' => UserRole::MECHANIC]);
+    $client = User::factory()->client()->create();
+    $mechanic = User::factory()->mechanic()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);
     $appointment = Appointment::factory()->create([
         'vehicle_id' => $vehicle->id,
@@ -65,7 +64,7 @@ test('a mechanic can view a vehicle connected to an assigned repair', function (
 });
 
 test('a mechanic cannot update a vehicle', function () {
-    $mechanic = User::factory()->create(['role' => UserRole::MECHANIC]);
+    $mechanic = User::factory()->mechanic()->create();
     $vehicle = Vehicle::factory()->create();
 
     $this->actingAs($mechanic)
@@ -81,7 +80,7 @@ test('a mechanic cannot update a vehicle', function () {
 });
 
 test('guests cannot access a vehicle', function () {
-    $owner = User::factory()->create(['role' => UserRole::CLIENT]);
+    $owner = User::factory()->client()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $owner->id]);
 
     $this->get(route('vehicles.show', $vehicle))

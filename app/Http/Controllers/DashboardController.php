@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        if ($user->isAdmin()) {
+        if ($user->hasRole('admin')) {
             return inertia('admin/dashboard', [
                 'totalUsers' => User::count(),
                 'totalVehicles' => Vehicle::count(),
@@ -24,7 +24,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        if ($user->isMechanic()) {
+        if ($user->hasRole('mechanic')) {
             return inertia('mechanic/dashboard', [
                 'repairs' => RepairOrder::query()
                     ->where('mechanic_id', $user->id)
@@ -34,7 +34,7 @@ class DashboardController extends Controller
             ]);
         }
 
-        if ($user->isClient()) {
+        if ($user->hasRole('client')) {
             return inertia('client/dashboard', [
                 'vehicles' => $user->vehicles()->get(),
                 'appointments' => $user->appointments()

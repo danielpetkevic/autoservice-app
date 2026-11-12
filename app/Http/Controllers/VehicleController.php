@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,16 +19,21 @@ class VehicleController extends Controller
         $user = $request->user();
         $vehicles = Vehicle::query()->with('user');
 
-        if ($user->isClient()) {
+        if ($user->hasRole('admin')) {
+            // Admin sees all vehicles.
+        } elseif ($user->hasRole('client')) {
             $vehicles->where('user_id', $user->id);
-        } elseif ($user->isMechanic()) {
-            $vehicles->whereHas('appointments.repairOrder', function ($query) use ($user): void {
-                $query->where('mechanic_id', $user->id);
-            });
+        } elseif ($user->hasRole('mechanic')) {
+            $vehicles->whereHas(
+                'appointments.repairOrder',
+                fn($query) => $query->where('mechanic_id', $user->id)
+            );
+        } else {
+            abort(403);
         }
 
         return inertia('vehicles/index', [
-            'vehicles' => $vehicles->latest()->get(),
+            'vehicles' => $vehicles->latest()->paginate(10),
         ]);
     }
 
@@ -46,20 +53,13 @@ class VehicleController extends Controller
         return inertia('vehicles/create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreVehicleRequest $request): RedirectResponse
     {
         Gate::authorize('create', Vehicle::class);
 
-        $validated = $request->validate([
-            'brand' => ['required', 'string', 'max:255'],
-            'model' => ['required', 'string', 'max:255'],
-            'year' => ['required', 'integer', 'between:1900,'.now()->year],
-            'license_plate' => ['required', 'string', 'max:255'],
-            'vin' => ['required', 'string', 'size:17', 'unique:vehicles,vin'],
-            'mileage' => ['required', 'integer', 'min:0'],
-        ]);
-
-        $request->user()->vehicles()->create($validated);
+        $request->user()
+        ->vehicles()
+        ->create($request->validated());
 
         return redirect()->route('vehicles.index');
     }
@@ -73,29 +73,30 @@ class VehicleController extends Controller
         ]);
     }
 
-    public function update(Request $request, Vehicle $vehicle): RedirectResponse
-    {
+    public function update(
+        UpdateVehicleRequest $request,
+        Vehicle $vehicle
+    ): RedirectResponse {
         Gate::authorize('update', $vehicle);
 
-        $validated = $request->validate([
-            'brand' => ['required', 'string', 'max:255'],
-            'model' => ['required', 'string', 'max:255'],
-            'year' => ['required', 'integer', 'between:1900,'.now()->year],
-            'license_plate' => ['required', 'string', 'max:255'],
-            'vin' => ['required', 'string', 'size:17', 'unique:vehicles,vin,'.$vehicle->id],
-            'mileage' => ['required', 'integer', 'min:0'],
-        ]);
-
-        $vehicle->update($validated);
+        $vehicle->update($request->validated());
 
         return redirect()->route('vehicles.show', $vehicle);
     }
 
-    public function destroy(Vehicle $vehicle): RedirectResponse
+    public function delete(User $user, Vehicle $vehicle): bool
     {
-        Gate::authorize('delete', $vehicle);
-        $vehicle->delete();
+        if (!$user->can('delete vehicles')) {
+            return false;
+        }
 
-        return redirect()->route('vehicles.index');
+        $authorized = $user->hasRole('admin')
+            || (
+                $user->hasRole('client')
+                && $vehicle->user_id === $user->id
+            );
+
+        return $authorized
+            && !$vehicle->appointments()->exists();
     }
 }

@@ -12,7 +12,7 @@ The system supports three roles:
 | Mechanic | Manages assigned repair orders, records performed services, and tracks used parts. |
 | Client   | Manages personal vehicles, books appointments, and tracks repair progress.         |
 
-Each user has one application role. Spatie Laravel Permission is the authorization source of truth; the legacy `users.role` column is retained for compatibility and migration backfills.
+Each user has one application role. Spatie Laravel Permission is the authorization source of truth. The legacy `users.role` column was migrated to Spatie and removed.
 
 Authorization is enforced on the Laravel backend using Spatie roles, Policies, and Gates. React uses permissions to control the interface, but frontend restrictions are not considered security boundaries.
 

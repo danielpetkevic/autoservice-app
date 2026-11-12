@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserRole;
 use App\Models\Appointment;
 use App\Models\RepairOrder;
 use App\Models\User;
@@ -15,7 +14,7 @@ test('guests are redirected to the login page', function () {
 });
 
 test('admins can visit the admin dashboard with statistics', function () {
-    $admin = User::factory()->create(['role' => UserRole::ADMIN]);
+    $admin = User::factory()->admin()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $admin->id]);
     Appointment::factory()->create([
         'user_id' => $admin->id,
@@ -35,8 +34,8 @@ test('admins can visit the admin dashboard with statistics', function () {
 });
 
 test('mechanics receive only their assigned repair orders', function () {
-    $mechanic = User::factory()->create(['role' => UserRole::MECHANIC]);
-    $client = User::factory()->create(['role' => UserRole::CLIENT]);
+    $mechanic = User::factory()->mechanic()->create();
+    $client = User::factory()->client()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);
     $appointment = Appointment::factory()->create([
         'user_id' => $client->id,
@@ -47,7 +46,7 @@ test('mechanics receive only their assigned repair orders', function () {
         'mechanic_id' => $mechanic->id,
     ]);
 
-    $otherMechanic = User::factory()->create(['role' => UserRole::MECHANIC]);
+    $otherMechanic = User::factory()->mechanic()->create();
     RepairOrder::factory()->create([
         'appointment_id' => $appointment->id,
         'mechanic_id' => $otherMechanic->id,
@@ -64,9 +63,8 @@ test('mechanics receive only their assigned repair orders', function () {
 });
 
 test('clients receive only their vehicles and appointments', function () {
-    $client = User::factory()->create([
+    $client = User::factory()->client()->create([
         'name' => 'Client User',
-        'role' => UserRole::CLIENT,
     ]);
     $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);
     $appointment = Appointment::factory()->create([
@@ -74,7 +72,7 @@ test('clients receive only their vehicles and appointments', function () {
         'vehicle_id' => $vehicle->id,
     ]);
 
-    $otherClient = User::factory()->create(['role' => UserRole::CLIENT]);
+    $otherClient = User::factory()->client()->create();
     Vehicle::factory()->create(['user_id' => $otherClient->id]);
 
     $this->actingAs($client)

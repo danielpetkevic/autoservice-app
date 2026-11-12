@@ -26,35 +26,35 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolePermissionSeeder::class);
 
-        User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'role' => 'admin',
         ]);
-        User::factory()->create([
+        $admin->assignRole('admin');
+
+        $mechanic = User::factory()->create([
             'name' => 'Mechanic User',
             'email' => 'mechanic@example.com',
-            'role' => 'mechanic',
         ]);
-        User::factory()->create([
+        $mechanic->assignRole('mechanic');
+
+        $client = User::factory()->create([
             'name' => 'Customer User',
             'email' => 'client@example.com',
-            'role' => 'client',
         ]);
-        User::factory()->create([
+        $client->assignRole('client');
+
+        $daniel = User::factory()->create([
             'name' => 'Daniel',
             'email' => 'daniel@example.com',
-            'role' => 'admin',
         ]);
+        $daniel->assignRole('admin');
 
         $categories = ServiceCategory::factory(5)->create();
         $parts = Part::factory(10)->create();
 
-        $clientUser = User::where('role', 'client')->firstOrFail();
-        $mechanicUser = User::where('role', 'mechanic')->firstOrFail();
-
         $vehicles = Vehicle::factory(5)->create([
-            'user_id' => $clientUser->id,
+            'user_id' => $client->id,
         ]);
 
         $services = Service::factory(10)->create([
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
 
         $appointments = Appointment::factory(5)->create([
             'vehicle_id' => fn () => $vehicles->random()->id,
-            'user_id' => $clientUser->id,
+            'user_id' => $client->id,
         ]);
 
         foreach ($appointments as $appointment) {
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         foreach ($appointments as $appointment) {
             $repairOrder = RepairOrder::factory()->create([
                 'appointment_id' => $appointment->id,
-                'mechanic_id' => $mechanicUser->id,
+                'mechanic_id' => $mechanic->id,
             ]);
 
             Payment::factory()->create([
