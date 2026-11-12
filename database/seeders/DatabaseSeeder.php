@@ -36,18 +36,23 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'Customer User',
-            'email' => 'customer@example.com',
-            'role' => 'customer',
+            'email' => 'client@example.com',
+            'role' => 'client',
+        ]);
+        User::factory()->create([
+            'name' => 'Daniel',
+            'email' => 'daniel@example.com',
+            'role' => 'admin',
         ]);
 
         ServiceCategory::factory(5)->create();
         Part::factory(10)->create();
 
-        $customerUser = User::where('role', 'customer')->first();
+        $clientUser = User::where('role', 'client')->first();
         $mechanicUser = User::where('role', 'mechanic')->first();
 
         Vehicle::factory(5)->create([
-            'user_id' => $customerUser->id,
+            'user_id' => $clientUser->id,
         ]);
 
         Service::factory(10)->create(
@@ -58,7 +63,7 @@ class DatabaseSeeder extends Seeder
 
         $appointments = Appointment::factory(5)->create([
             'vehicle_id' => Vehicle::inRandomOrder()->first()->id,
-            'user_id' => $customerUser->id,
+            'user_id' => $clientUser->id,
         ]);
 
         $services = Service::pluck('id');
