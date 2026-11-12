@@ -13,16 +13,17 @@ test('admin can access the admin dashboard', function () {
     $admin = User::factory()->create(['role' => UserRole::ADMIN]);
 
     $this->actingAs($admin)
-        ->get(route('admin.dashboard'))
+        ->get(route('dashboard'))
         ->assertOk();
 });
 
-test('clients cannot access the admin dashboard', function () {
+test('clients access their client dashboard', function () {
     $client = User::factory()->create(['role' => UserRole::CLIENT]);
 
     $this->actingAs($client)
-        ->get(route('admin.dashboard'))
-        ->assertForbidden();
+        ->get(route('dashboard'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('client/dashboard'));
 });
 
 test('a client can view their own vehicle', function () {

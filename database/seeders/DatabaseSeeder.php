@@ -45,52 +45,50 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        ServiceCategory::factory(5)->create();
-        Part::factory(10)->create();
+        $categories = ServiceCategory::factory(5)->create();
+        $parts = Part::factory(10)->create();
 
-        $clientUser = User::where('role', 'client')->first();
-        $mechanicUser = User::where('role', 'mechanic')->first();
+        $clientUser = User::where('role', 'client')->firstOrFail();
+        $mechanicUser = User::where('role', 'mechanic')->firstOrFail();
 
-        Vehicle::factory(5)->create([
+        $vehicles = Vehicle::factory(5)->create([
             'user_id' => $clientUser->id,
         ]);
 
-        Service::factory(10)->create(
-            [
-                'category_id' => ServiceCategory::inRandomOrder()->first()->id,
-            ]
-        );
+        $services = Service::factory(10)->create([
+            'category_id' => fn() => $categories->random()->id,
+        ]);
 
         $appointments = Appointment::factory(5)->create([
-            'vehicle_id' => Vehicle::inRandomOrder()->first()->id,
+            'vehicle_id' => fn() => $vehicles->random()->id,
             'user_id' => $clientUser->id,
         ]);
-
-        $services = Service::pluck('id');
 
         foreach ($appointments as $appointment) {
             $appointment->services()->attach(
-                $services->random(random_int(1, 3))
+                $services->random(random_int(1, 3))->pluck('id')->all()
             );
         }
 
-        RepairOrder::factory(5)->create([
-            'appointment_id' => Appointment::inRandomOrder()->first()->id,
-            'mechanic_id' => $mechanicUser->id,
-        ]);
+        foreach ($appointments as $appointment) {
+            $repairOrder = RepairOrder::factory()->create([
+                'appointment_id' => $appointment->id,
+                'mechanic_id' => $mechanicUser->id,
+            ]);
 
-        Payment::factory(5)->create([
-            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
-        ]);
+            Payment::factory()->create([
+                'repair_order_id' => $repairOrder->id,
+            ]);
 
-        RepairService::factory(5)->create([
-            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
-            'service_id' => Service::inRandomOrder()->first()->id,
-        ]);
+            RepairService::factory()->create([
+                'repair_order_id' => $repairOrder->id,
+                'service_id' => $services->random()->id,
+            ]);
 
-        RepairPart::factory(15)->create([
-            'repair_order_id' => RepairOrder::inRandomOrder()->first()->id,
-            'part_id' => Part::inRandomOrder()->first()->id,
-        ]);
+            RepairPart::factory(3)->create([
+                'repair_order_id' => $repairOrder->id,
+                'part_id' => fn() => $parts->random()->id,
+            ]);
+        }
     }
 }
