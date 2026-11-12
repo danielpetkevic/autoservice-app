@@ -56,11 +56,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $services = Service::factory(10)->create([
-            'category_id' => fn() => $categories->random()->id,
+            'category_id' => fn () => $categories->random()->id,
         ]);
 
         $appointments = Appointment::factory(5)->create([
-            'vehicle_id' => fn() => $vehicles->random()->id,
+            'vehicle_id' => fn () => $vehicles->random()->id,
             'user_id' => $clientUser->id,
         ]);
 
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
 
             RepairPart::factory(3)->create([
                 'repair_order_id' => $repairOrder->id,
-                'part_id' => fn() => $parts->random()->id,
+                'part_id' => fn () => $parts->random()->id,
             ]);
         }
     }

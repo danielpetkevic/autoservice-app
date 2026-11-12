@@ -1,5 +1,12 @@
 import { statistics } from '@/constants';
 import { Head } from '@inertiajs/react';
+import { Activity, CalendarDays, Car, Users } from 'lucide-react';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+} from '@/components/ui/card';
 
 interface Props {
     totalUsers: number;
@@ -21,37 +28,52 @@ export default function AdminDashboard({
         totalRepairOrders,
     };
 
+    const icons = {
+        totalUsers: Users,
+        totalVehicles: Car,
+        totalAppointments: CalendarDays,
+        totalRepairOrders: Activity,
+    };
+
     return (
         <>
             <Head title="Admin dashboard" />
-            <div className="space-y-6 p-6">
-                <div>
-                    <h1 className="text-2xl font-bold">Admin dashboard</h1>
+            <div className="space-y-8 p-6">
+                <header className="space-y-1">
+                    <p className="text-sm font-medium text-primary">
+                        AutoService overview
+                    </p>
+                    <h1 className="text-3xl font-semibold tracking-tight">
+                        Admin dashboard
+                    </h1>
                     <p className="text-muted-foreground">
                         Overview of your auto service business.
                     </p>
-                </div>
+                </header>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {statistics.map((statistic) => (
-                        <div
-                            key={statistic.key}
-                            className="rounded-lg border bg-card p-5 shadow-sm"
-                        >
-                            <div className="flex items-center justify-between gap-4">
-                                <span className="text-sm font-medium text-muted-foreground">
+                        <Card key={statistic.key}>
+                            <CardHeader className="flex-row items-center justify-between">
+                                <CardDescription>
                                     {statistic.label}
-                                </span>
-                                <span
-                                    className={`rounded-full px-3 py-1 text-xs font-medium ${statistic.color}`}
-                                >
-                                    Total
-                                </span>
-                            </div>
-                            <p className="mt-4 text-3xl font-bold">
-                                {totals[statistic.key]}
-                            </p>
-                        </div>
+                                </CardDescription>
+                                {(() => {
+                                    const Icon = icons[statistic.key];
+                                    return (
+                                        <Icon className="size-5 text-primary" />
+                                    );
+                                })()}
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-3xl font-semibold">
+                                    {totals[statistic.key]}
+                                </p>
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Current total
+                                </p>
+                            </CardContent>
+                        </Card>
                     ))}
                 </div>
             </div>
