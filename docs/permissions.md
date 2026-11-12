@@ -12,9 +12,13 @@ The system supports three roles:
 | Mechanic | Manages assigned repair orders, records performed services, and tracks used parts. |
 | Client   | Manages personal vehicles, books appointments, and tracks repair progress.         |
 
-Each user has exactly one role, stored in the `users.role` column.
+Each user has one application role. Spatie Laravel Permission is the authorization source of truth; the legacy `users.role` column is retained for compatibility and migration backfills.
 
-Authorization is enforced on the Laravel backend using Policies and Gates. React uses permissions to control the interface, but frontend restrictions are not considered security boundaries.
+Authorization is enforced on the Laravel backend using Spatie roles, Policies, and Gates. React uses permissions to control the interface, but frontend restrictions are not considered security boundaries.
+
+The available route middleware aliases are `role`, `permission`, and `role_or_permission`. Multiple roles use a pipe, for example `role:admin|mechanic`.
+
+`RolePermissionSeeder` creates the roles and permissions and is safe to run repeatedly. Public registration always assigns the `client` role.
 
 ---
 

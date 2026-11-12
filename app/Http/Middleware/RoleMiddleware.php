@@ -17,7 +17,7 @@ class RoleMiddleware
     {
         $user = $request->user();
 
-        abort_unless($user !== null && in_array($user->role->value, $roles, true), 403);
+        abort_unless($user !== null && $user->hasAnyRole($roles), 403);
 
         return $next($request);
     }

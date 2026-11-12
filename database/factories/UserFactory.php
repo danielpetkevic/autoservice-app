@@ -39,6 +39,13 @@ class UserFactory extends Factory
         ];
     }
 
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->syncRoles($user->role);
+        });
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      */

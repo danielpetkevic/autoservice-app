@@ -11,7 +11,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('dashboard');
 
     Route::resource('vehicles', VehicleController::class)
-        ->middleware('role:admin,client,mechanic');
+        ->middleware('role:admin|client|mechanic');
 });
 
 require __DIR__.'/settings.php';
