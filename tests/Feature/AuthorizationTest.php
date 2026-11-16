@@ -4,9 +4,14 @@ use App\Models\Appointment;
 use App\Models\RepairOrder;
 use App\Models\User;
 use App\Models\Vehicle;
+use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->seed(RolePermissionSeeder::class);
+});
 
 test('admin can access the admin dashboard', function () {
     $admin = User::factory()->admin()->create();
@@ -77,6 +82,29 @@ test('a mechanic cannot update a vehicle', function () {
             'mileage' => 50000,
         ])
         ->assertForbidden();
+});
+
+test('a client can delete their own vehicle', function () {
+    $client = User::factory()->client()->create();
+    $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);
+
+    $this->actingAs($client)
+        ->delete(route('vehicles.destroy', $vehicle))
+        ->assertRedirect(route('vehicles.index'));
+
+    $this->assertModelMissing($vehicle);
+});
+
+test('a client cannot delete another clients vehicle', function () {
+    $owner = User::factory()->client()->create();
+    $otherClient = User::factory()->client()->create();
+    $vehicle = Vehicle::factory()->create(['user_id' => $owner->id]);
+
+    $this->actingAs($otherClient)
+        ->delete(route('vehicles.destroy', $vehicle))
+        ->assertForbidden();
+
+    $this->assertModelExists($vehicle);
 });
 
 test('guests cannot access a vehicle', function () {

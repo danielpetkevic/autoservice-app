@@ -14,7 +14,7 @@ class VehiclePolicy
 
     public function view(User $user, Vehicle $vehicle): bool
     {
-        if (!$user->can('vehicles.view')) {
+        if (! $user->can('vehicles.view')) {
             return false;
         }
 
@@ -28,30 +28,31 @@ class VehiclePolicy
 
         return $user->hasRole('mechanic')
             && $vehicle->appointments()
-                ->whereHas('repairOrder', fn($query) => $query->where('mechanic_id', $user->id))
+                ->whereHas('repairOrder', fn ($query) => $query->where('mechanic_id', $user->id))
                 ->exists();
     }
 
     public function create(User $user): bool
     {
-        if(!$user->can('vehicles.create')) {
+        if (! $user->can('vehicles.create')) {
             return false;
         }
-    
+
         return $user->hasAnyRole('admin|client');
     }
 
     public function update(User $user, Vehicle $vehicle): bool
     {
-        if(!$user->can('vehicles.update')) {
+        if (! $user->can('vehicles.update')) {
             return false;
         }
+
         return $user->hasRole('admin') || ($user->hasRole('client') && $vehicle->user_id === $user->id);
     }
 
     public function delete(User $user, Vehicle $vehicle): bool
     {
-        if(!$user->can('vehicles.delete')) {
+        if (! $user->can('vehicles.delete')) {
             return false;
         }
 
@@ -61,6 +62,6 @@ class VehiclePolicy
 
         return $user->hasRole('client')
             && $vehicle->user_id === $user->id
-            && !$vehicle->appointments()->exists();
+            && ! $vehicle->appointments()->exists();
     }
 }

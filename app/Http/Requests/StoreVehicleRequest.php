@@ -28,7 +28,7 @@ class StoreVehicleRequest extends FormRequest
             'year' => [
                 'required',
                 'integer',
-                'between:1900,' . now()->year,
+                'between:1900,'.now()->year,
             ],
             'license_plate' => ['required', 'string', 'max:255'],
             'vin' => [

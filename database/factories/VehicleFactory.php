@@ -36,7 +36,7 @@ class VehicleFactory extends Factory
             'model' => $this->faker->randomElement($vehicles[$brand]),
             'year' => $this->faker->numberBetween(2005, 2025),
             'vin' => $this->faker->unique()->regexify('[A-HJ-NPR-Z0-9]{17}'),
-            'license_plate' => $this->faker->unique()->bothify('???###'),
+            'license_plate' => strtoupper($this->faker->unique()->bothify('???###')),
             'mileage' => $this->faker->numberBetween(10000, 250000),
             'user_id' => 1,
         ];

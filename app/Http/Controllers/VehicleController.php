@@ -26,7 +26,7 @@ class VehicleController extends Controller
         } elseif ($user->hasRole('mechanic')) {
             $vehicles->whereHas(
                 'appointments.repairOrder',
-                fn($query) => $query->where('mechanic_id', $user->id)
+                fn ($query) => $query->where('mechanic_id', $user->id)
             );
         } else {
             abort(403);
@@ -58,10 +58,10 @@ class VehicleController extends Controller
         Gate::authorize('create', Vehicle::class);
 
         $request->user()
-        ->vehicles()
-        ->create($request->validated());
+            ->vehicles()
+            ->create($request->validated());
 
-        return redirect()->route('vehicles.index');
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully.');
     }
 
     public function edit(Vehicle $vehicle): Response
@@ -81,22 +81,15 @@ class VehicleController extends Controller
 
         $vehicle->update($request->validated());
 
-        return redirect()->route('vehicles.show', $vehicle);
+        return redirect()->route('vehicles.show', $vehicle)->with('success', 'Vehicle updated successfully.');
     }
 
-    public function delete(User $user, Vehicle $vehicle): bool
+    public function destroy(Vehicle $vehicle): RedirectResponse
     {
-        if (!$user->can('delete vehicles')) {
-            return false;
-        }
+        Gate::authorize('delete', $vehicle);
 
-        $authorized = $user->hasRole('admin')
-            || (
-                $user->hasRole('client')
-                && $vehicle->user_id === $user->id
-            );
+        $vehicle->delete();
 
-        return $authorized
-            && !$vehicle->appointments()->exists();
+        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted successfully.');
     }
 }

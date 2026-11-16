@@ -17,14 +17,17 @@ class AppointmentController extends Controller
         $user = $request->user();
         $appointments = Appointment::query()->with(['vehicle', 'repairOrder']);
 
-        if ($user->isClient()) {
-            $appointments->whereHas('vehicle', function ($query) use ($user): void {
-                $query->where('user_id', $user->id);
-            });
-        } elseif ($user->isMechanic()) {
-            $appointments->whereHas('repairOrder', function ($query) use ($user): void {
-                $query->where('mechanic_id', $user->id);
-            });
+        if ($user->hasRole('admin')) {
+            // Admin sees all appointments.
+        } elseif ($user->hasRole('client')) {
+            $appointments->whereHas('vehicle', fn ($query) => $query->where('user_id', $user->id));
+        } elseif ($user->hasRole('mechanic')) {
+            $appointments->whereHas(
+                'repairOrder',
+                fn ($query) => $query->where('mechanic_id', $user->id)
+            );
+        } else {
+            abort(403);
         }
 
         return inertia('appointments/index', [

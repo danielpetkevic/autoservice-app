@@ -31,14 +31,14 @@ class UpdateVehicleRequest extends FormRequest
             'year' => [
                 'required',
                 'integer',
-                'between:1900,' . now()->year,
+                'between:1900,'.now()->year,
             ],
             'license_plate' => ['required', 'string', 'max:255'],
             'vin' => [
                 'required',
                 'string',
                 'size:17',
-                Rule::unique('vehicles', 'vin')->ignore($vehicle->id),
+                Rule::unique('vehicles', 'vin')->ignore($vehicle),
             ],
             'mileage' => ['required', 'integer', 'min:0'],
         ];

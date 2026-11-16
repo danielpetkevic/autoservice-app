@@ -50,6 +50,12 @@ class DatabaseSeeder extends Seeder
         ]);
         $daniel->assignRole('admin');
 
+        $client2 = User::factory()->create([
+            'name' => 'Client 2',
+            'email' => 'client2@example.com',
+        ]);
+        $client2->assignRole('client');
+
         $categories = ServiceCategory::factory(5)->create();
         $parts = Part::factory(10)->create();
 
