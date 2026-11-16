@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
+use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,23 +18,39 @@ class VehicleController extends Controller
         Gate::authorize('viewAny', Vehicle::class);
 
         $user = $request->user();
+
         $vehicles = Vehicle::query()->with('user');
 
         if ($user->hasRole('admin')) {
-            // Admin sees all vehicles.
+            $header = 'Vehicle Management';
+            $paragraph = 'Manage user vehicles and their details.';
         } elseif ($user->hasRole('client')) {
             $vehicles->where('user_id', $user->id);
+
+            $header = 'My Vehicles';
+            $paragraph = 'View and manage your registered vehicles.';
         } elseif ($user->hasRole('mechanic')) {
             $vehicles->whereHas(
                 'appointments.repairOrder',
                 fn ($query) => $query->where('mechanic_id', $user->id)
             );
+
+            $header = 'Assigned Vehicles';
+            $paragraph = 'View vehicles associated with your assigned repairs.';
         } else {
             abort(403);
         }
 
         return inertia('vehicles/index', [
-            'vehicles' => $vehicles->latest()->paginate(10),
+            'vehicles' => VehicleResource::collection(
+                $vehicles->latest()->paginate(10)
+            ),
+            'header' => $header,
+            'paragraph' => $paragraph,
+            'role' => $user->getRoleNames()->first(),
+            'can' => [
+                'create' => Gate::allows('create', Vehicle::class),
+            ],
         ]);
     }
 
@@ -42,7 +59,7 @@ class VehicleController extends Controller
         Gate::authorize('view', $vehicle);
 
         return inertia('vehicles/show', [
-            'vehicle' => $vehicle->load('user'),
+            'vehicle' => new VehicleResource($vehicle->load('user')),
         ]);
     }
 

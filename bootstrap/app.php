@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -36,4 +37,31 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
-    })->create();
+
+        $exceptions->respond(function (Response $response, Throwable $e, Request $request) {
+            $isInertiaMutation = $request->header('X-Inertia')
+                && in_array($request->method(), [
+                    'POST',
+                    'PUT',
+                    'PATCH',
+                    'DELETE',
+                ], true);
+
+            if ($response->getStatusCode() === 403 && $isInertiaMutation) {
+                return back()->with(
+                    'error',
+                    'You do not have permission to perform this action.'
+                );
+            }
+
+            if ($response->getStatusCode() === 419 && ! $request->is('api/*')) {
+                return back()->with(
+                    'error',
+                    'Your session has expired. Please try again.'
+                );
+            }
+
+            return $response;
+        });
+    })
+    ->create();

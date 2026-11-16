@@ -31,6 +31,11 @@ class VehicleResource extends JsonResource
                     'name' => $vehicle->user->name,
                 ] : null
             ),
+            'can' => [
+                'view' => $request->user()->can('view', $this->resource),
+                'update' => $request->user()->can('update', $this->resource),
+                'delete' => $request->user()->can('delete', $this->resource),
+            ],
         ];
     }
 }
