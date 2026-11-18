@@ -1,5 +1,11 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, ChartColumn, Car } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import {
+    BookOpen,
+    FolderGit2,
+    ChartColumn,
+    Car,
+    FolderOpen,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,9 +21,20 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as vehicles } from '@/routes/vehicles';
+import { index as serviceCategories } from '@/routes/service_categories';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+type SidebarItem = NavItem & {
+    permission?: string;
+};
+
+type AuthProps = {
+    auth: {
+        permissions: string[];
+    };
+};
+
+const mainNavItems: SidebarItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -27,6 +44,13 @@ const mainNavItems: NavItem[] = [
         title: 'Vehicles',
         href: vehicles(),
         icon: Car,
+        permission: 'vehicles.view',
+    },
+    {
+        title: 'Service Categories',
+        href: serviceCategories(),
+        icon: FolderOpen,
+        permission: 'service_categories.manage',
     },
 ];
 
@@ -44,6 +68,13 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const { auth } = usePage<AuthProps>().props;
+
+    const visibleNavItems = mainNavItems.filter(
+        (item) =>
+            !item.permission || auth.permissions.includes(item.permission),
+    );
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -59,7 +90,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={visibleNavItems} />
             </SidebarContent>
 
             <SidebarFooter>

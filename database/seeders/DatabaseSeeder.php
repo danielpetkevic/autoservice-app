@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,35 +27,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolePermissionSeeder::class);
 
-        $admin = User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-        ]);
-        $admin->assignRole('admin');
-
-        $mechanic = User::factory()->create([
-            'name' => 'Mechanic User',
-            'email' => 'mechanic@example.com',
-        ]);
-        $mechanic->assignRole('mechanic');
-
-        $client = User::factory()->create([
-            'name' => 'Customer User',
-            'email' => 'client@example.com',
-        ]);
-        $client->assignRole('client');
-
-        $daniel = User::factory()->create([
-            'name' => 'Daniel',
-            'email' => 'daniel@example.com',
-        ]);
-        $daniel->assignRole('admin');
-
-        $client2 = User::factory()->create([
-            'name' => 'Client 2',
-            'email' => 'client2@example.com',
-        ]);
-        $client2->assignRole('client');
+        $this->seedUser('Admin User', 'admin@example.com', 'admin');
+        $mechanic = $this->seedUser('Mechanic User', 'mechanic@example.com', 'mechanic');
+        $client = $this->seedUser('Customer User', 'client@example.com', 'client');
+        $this->seedUser('Daniel', 'daniel@example.com', 'admin');
+        $this->seedUser('Client 2', 'client2@example.com', 'client');
 
         $categories = ServiceCategory::factory(5)->create();
         $parts = Part::factory(10)->create();
@@ -98,5 +75,28 @@ class DatabaseSeeder extends Seeder
                 'part_id' => fn () => $parts->random()->id,
             ]);
         }
+    }
+
+    private function seedUser(string $name, string $email, string $role): User
+    {
+        $user = User::firstOrCreate(
+            ['email' => $email],
+            [
+                'name' => $name,
+                'email' => $email,
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ],
+        );
+
+        if (! $user->number) {
+            $user->forceFill([
+                'number' => fake()->unique()->numerify('+370########'),
+            ])->save();
+        }
+
+        $user->assignRole($role);
+
+        return $user;
     }
 }

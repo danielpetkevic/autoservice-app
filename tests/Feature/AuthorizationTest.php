@@ -84,6 +84,37 @@ test('a mechanic cannot update a vehicle', function () {
         ->assertForbidden();
 });
 
+test('an admin can create a service category', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->post(route('service_categories.store'), [
+            'name' => 'Engine Repair',
+            'description' => 'Engine diagnostics and repair',
+        ])
+        ->assertRedirect(route('service_categories.index'));
+
+    $this->assertDatabaseHas('service_categories', [
+        'name' => 'Engine Repair',
+        'description' => 'Engine diagnostics and repair',
+    ]);
+});
+
+test('a client cannot create a service category', function () {
+    $client = User::factory()->client()->create();
+
+    $this->actingAs($client)
+        ->post(route('service_categories.store'), [
+            'name' => 'Unauthorized Category',
+            'description' => null,
+        ])
+        ->assertForbidden();
+
+    $this->assertDatabaseMissing('service_categories', [
+        'name' => 'Unauthorized Category',
+    ]);
+});
+
 test('a client can delete their own vehicle', function () {
     $client = User::factory()->client()->create();
     $vehicle = Vehicle::factory()->create(['user_id' => $client->id]);

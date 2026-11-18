@@ -95,6 +95,12 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "quality": [
+            "npx vp check --fix",
+            "@php vendor/bin/phpstan analyse",
+            "@php vendor/bin/pint",
+            "@php artisan test"
         ]
     },
     "extra": {

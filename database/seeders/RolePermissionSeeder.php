@@ -37,6 +37,9 @@ class RolePermissionSeeder extends Seeder
 
             // Users
             'users.manage',
+
+            // Service categories
+            'service_categories.manage',
         ];
 
         foreach ($permissions as $permission) {
