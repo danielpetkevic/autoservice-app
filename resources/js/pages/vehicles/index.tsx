@@ -2,24 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { create as vehicleCreate } from '@/routes/vehicles';
 import { Button } from '@/components/ui/button';
 import VehicleCard from '@/components/vehicles/vehicle-card';
-
-interface Vehicle {
-    id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-    mileage: number;
-    owner?: {
-        id: number;
-        name: string;
-    } | null;
-    can: {
-        view: boolean;
-        update: boolean;
-        delete: boolean;
-    };
-}
+import type { Vehicle } from '@/types';
 
 interface Props {
     vehicles: {

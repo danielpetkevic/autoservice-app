@@ -10,24 +10,7 @@ import {
     show as vehicleShow,
     destroy as vehicleDestroy,
 } from '@/routes/vehicles';
-
-interface Vehicle {
-    id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-    mileage: number;
-    owner?: {
-        id: number;
-        name: string;
-    } | null;
-    can: {
-        view: boolean;
-        update: boolean;
-        delete: boolean;
-    };
-}
+import type { Vehicle } from '@/types';
 
 interface Props {
     vehicle: Vehicle;

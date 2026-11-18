@@ -39,7 +39,20 @@ class RolePermissionSeeder extends Seeder
             'users.manage',
 
             // Service categories
+            'service_categories.view',
             'service_categories.manage',
+
+            // Services
+            'services.viewActive',
+            'services.viewInactive',
+            'services.create',
+            'services.update',
+            'services.delete',
+
+            // Parts
+
+            'parts.view',
+            'parts.manage',
         ];
 
         foreach ($permissions as $permission) {
@@ -73,6 +86,11 @@ class RolePermissionSeeder extends Seeder
             'appointments.view',
             'repair-orders.view',
             'repair-orders.update',
+            'service_categories.view',
+            'services.viewActive',
+            'services.viewInactive',
+            'services.update',
+            'parts.view',
         ]);
 
         // Client
@@ -87,6 +105,8 @@ class RolePermissionSeeder extends Seeder
             'appointments.cancel',
             'appointments.select-services',
             'repair-orders.view',
+            'service_categories.view',
+            'services.viewActive',
         ]);
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();

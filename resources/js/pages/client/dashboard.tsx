@@ -8,14 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-
-interface Vehicle {
-    id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-}
+import type { Vehicle } from '@/types';
 
 interface Appointment {
     id: number;

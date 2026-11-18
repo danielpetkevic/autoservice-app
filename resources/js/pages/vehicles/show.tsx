@@ -3,25 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 import { index as vehiclesIndex } from '@/routes/vehicles';
 import VehicleDetails from '@/components/vehicles/vehicle-details';
-
-interface Vehicle {
-    id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-    mileage: number;
-    vin: string;
-    owner?: {
-        id: number;
-        name: string;
-    } | null;
-    can: {
-        view: boolean;
-        update: boolean;
-        delete: boolean;
-    };
-}
+import type { Vehicle } from '@/types';
 
 interface Props {
     vehicle: Vehicle;

@@ -5,6 +5,8 @@ import {
     ChartColumn,
     Car,
     FolderOpen,
+    Wrench,
+    Package,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -22,7 +24,9 @@ import {
 import { dashboard } from '@/routes';
 import { index as vehicles } from '@/routes/vehicles';
 import { index as serviceCategories } from '@/routes/service_categories';
+import { index as parts } from '@/routes/parts';
 import type { NavItem } from '@/types';
+import { index as services } from '@/routes/services';
 
 type SidebarItem = NavItem & {
     permission?: string;
@@ -47,10 +51,22 @@ const mainNavItems: SidebarItem[] = [
         permission: 'vehicles.view',
     },
     {
+        title: 'Services',
+        href: services(),
+        icon: Wrench,
+        permission: 'services.update',
+    },
+    {
         title: 'Service Categories',
         href: serviceCategories(),
         icon: FolderOpen,
         permission: 'service_categories.manage',
+    },
+    {
+        title: 'Parts',
+        href: parts(),
+        icon: Package,
+        permission: 'parts.view',
     },
 ];
 

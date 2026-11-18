@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Appointment;
+use App\Models\Part;
 use App\Models\RepairOrder;
+use App\Models\ServiceCategory;
 use App\Models\User;
 use App\Models\Vehicle;
 use Database\Seeders\RolePermissionSeeder;
@@ -112,6 +114,74 @@ test('a client cannot create a service category', function () {
 
     $this->assertDatabaseMissing('service_categories', [
         'name' => 'Unauthorized Category',
+    ]);
+});
+
+test('an admin can create a service', function () {
+    $admin = User::factory()->admin()->create();
+    $category = ServiceCategory::factory()->create();
+
+    $this->actingAs($admin)
+        ->post(route('services.store'), [
+            'name' => 'Oil Change',
+            'description' => 'Replace the engine oil and filter.',
+            'category_id' => $category->id,
+            'price' => 79.99,
+            'duration' => 45,
+            'is_active' => true,
+        ])
+        ->assertRedirect(route('services.index'));
+
+    $this->assertDatabaseHas('services', [
+        'name' => 'Oil Change',
+        'category_id' => $category->id,
+        'price' => 79.99,
+        'duration' => 45,
+        'is_active' => true,
+    ]);
+});
+
+test('an admin can create a part', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->post(route('parts.store'), [
+            'name' => 'Oil Filter',
+            'description' => 'Engine oil filter',
+            'sku' => 'OIL-FILTER-12345',
+            'price' => 19.99,
+        ])
+        ->assertRedirect(route('parts.index'));
+
+    $this->assertDatabaseHas('parts', [
+        'name' => 'Oil Filter',
+        'description' => 'Engine oil filter',
+        'sku' => 'OIL-FILTER-12345',
+        'price' => 19.99,
+        'stock_quantity' => 1,
+    ]);
+});
+
+test('an admin can update a part without a sku uniqueness conflict for itself', function () {
+    $admin = User::factory()->admin()->create();
+    $part = Part::factory()->create([
+        'sku' => 'PART-OIL-12345',
+    ]);
+
+    $this->actingAs($admin)
+        ->put(route('parts.update', $part), [
+            'name' => 'Updated Oil Filter',
+            'description' => 'Updated description',
+            'sku' => 'PART-OIL-12345',
+            'price' => 24.99,
+        ])
+        ->assertRedirect(route('parts.index'));
+
+    $this->assertDatabaseHas('parts', [
+        'id' => $part->id,
+        'name' => 'Updated Oil Filter',
+        'sku' => 'PART-OIL-12345',
+        'price' => 24.99,
     ]);
 });
 

@@ -18,7 +18,14 @@ class ServiceCategoryController extends Controller
         return inertia('service_categories/index', [
             'categories' => ServiceCategory::query()
                 ->orderBy('name')
-                ->paginate(12),
+                ->paginate(12)
+                ->through(fn (ServiceCategory $category) => [
+                    ...$category->toArray(),
+                    'can' => [
+                        'update' => Gate::allows('update', $category),
+                        'delete' => Gate::allows('delete', $category),
+                    ],
+                ]),
             'header' => 'Service Categories',
             'paragraph' => 'Browse and manage your service categories.',
             'can' => [
@@ -69,6 +76,6 @@ class ServiceCategoryController extends Controller
 
         $serviceCategory->delete();
 
-        return redirect()->route('service_categories.index')->with('success', 'Service category deleted successfully.');
+        return redirect()->route('service_categories.index')->with('success', 'Service category deleted successfully. Some services may have been moved to the "Uncategorized" category.');
     }
 }

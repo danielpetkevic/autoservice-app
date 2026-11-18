@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Database\Factories\ServiceFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[Fillable(['name', 'description', 'category_id', 'price', 'duration', 'is_active'])]
 class Service extends Model
 {
     /** @use HasFactory<ServiceFactory> */
@@ -19,7 +21,7 @@ class Service extends Model
      */
     public function serviceCategory(): BelongsTo
     {
-        return $this->belongsTo(ServiceCategory::class);
+        return $this->belongsTo(ServiceCategory::class, 'category_id');
     }
 
     /**
@@ -36,5 +38,12 @@ class Service extends Model
     public function repairServices(): HasMany
     {
         return $this->hasMany(RepairService::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
     }
 }

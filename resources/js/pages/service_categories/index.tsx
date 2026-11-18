@@ -1,13 +1,12 @@
-import CategoryCard from '@/components/service_categories/category-card';
+import ItemCard from '@/components/service-associated/item-card';
 import { Button } from '@/components/ui/button';
 import { Head, Link } from '@inertiajs/react';
 import { FolderOpen, Plus } from 'lucide-react';
-
-interface ServiceCategory {
-    id: number;
-    name: string;
-    description: string | null;
-}
+import {
+    edit as serviceCategoryEdit,
+    destroy as serviceCategoryDestroy,
+} from '@/routes/service_categories';
+import type { ServiceCategory } from '@/types';
 
 interface Props {
     categories: {
@@ -65,7 +64,17 @@ export default function ServiceCategoriesIndex({
                     <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                         {categories.data.map((category) => (
                             <li key={category.id}>
-                                <CategoryCard category={category} />
+                                <ItemCard
+                                    item={category}
+                                    editUrl={serviceCategoryEdit.url(
+                                        category.id,
+                                    )}
+                                    deleteUrl={serviceCategoryDestroy.url(
+                                        category.id,
+                                    )}
+                                    type="category"
+                                    can={category.can}
+                                />
                             </li>
                         ))}
                     </ul>

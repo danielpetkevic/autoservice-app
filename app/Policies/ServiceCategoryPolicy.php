@@ -9,7 +9,7 @@ class ServiceCategoryPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->can('service_categories.manage');
+        return $user->can('service_categories.view');
     }
 
     public function create(User $user): bool

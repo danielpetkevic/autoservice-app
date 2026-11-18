@@ -13,16 +13,7 @@ import { Label } from '@/components/ui/label';
 import { show, update } from '@/routes/vehicles';
 import { Form, Head, Link } from '@inertiajs/react';
 import { ArrowLeft, CarFront, LoaderCircle, Save } from 'lucide-react';
-
-interface Vehicle {
-    id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-    vin: string;
-    mileage: number;
-}
+import type { Vehicle } from '@/types';
 
 interface Props {
     vehicle: Vehicle;
