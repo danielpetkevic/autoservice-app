@@ -56,7 +56,11 @@
         "delete_confirm": "Ar tikrai norite ištrinti „{{name}}“?",
         "toggle_sidebar": "Perjungti šoninę juostą",
         "sidebar": "Šoninė juosta",
-        "mobile_sidebar_description": "Rodo mobiliosios šoninės juostos turinį."
+        "mobile_sidebar_description": "Rodo mobiliosios šoninės juostos turinį.",
+        "language": "Kalba",
+        "light": "Šviesi",
+        "dark": "Tamsi",
+        "system": "Sistemos"
     },
     "dashboard": {
         "title": "Pultas",
@@ -81,7 +85,11 @@
         "no_repairs": "Nėra priskirtų remonto darbų",
         "new_repairs": "Čia bus rodomi nauji remonto užsakymai.",
         "repair_order": "Remonto užsakymas Nr. {{id}}",
-        "start_date": "Pradžios data"
+        "start_date": "Pradžios data",
+        "users": "Vartotojai",
+        "vehicles_label": "Transporto priemonės",
+        "appointments_label": "Vizitai",
+        "repair_orders": "Remonto užsakymai"
     },
     "welcome": {
         "title": "Sveiki",

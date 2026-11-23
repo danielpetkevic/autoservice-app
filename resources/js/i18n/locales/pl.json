@@ -56,7 +56,11 @@
         "delete_confirm": "Czy na pewno chcesz usunąć „{{name}}”?",
         "toggle_sidebar": "Przełącz pasek boczny",
         "sidebar": "Pasek boczny",
-        "mobile_sidebar_description": "Wyświetla mobilny pasek boczny."
+        "mobile_sidebar_description": "Wyświetla mobilny pasek boczny.",
+        "language": "Język",
+        "light": "Jasny",
+        "dark": "Ciemny",
+        "system": "Systemowy"
     },
     "dashboard": {
         "title": "Panel",
@@ -81,7 +85,11 @@
         "no_repairs": "Brak przypisanych napraw",
         "new_repairs": "Nowe zlecenia naprawy pojawią się tutaj.",
         "repair_order": "Zlecenie naprawy nr {{id}}",
-        "start_date": "Data rozpoczęcia"
+        "start_date": "Data rozpoczęcia",
+        "users": "Użytkownicy",
+        "vehicles_label": "Pojazdy",
+        "appointments_label": "Wizyty",
+        "repair_orders": "Zlecenia napraw"
     },
     "welcome": {
         "title": "Witamy",

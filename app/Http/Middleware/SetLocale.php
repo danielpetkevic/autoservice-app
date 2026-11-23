@@ -12,7 +12,7 @@ class SetLocale
     {
         $supportedLocales = ['en', 'lt', 'pl'];
 
-        $locale = $request->user()?->locale
+        $locale = $request->user()->locale
             ?? $request->session()->get('locale', 'en');
 
         if (! in_array($locale, $supportedLocales, true)) {

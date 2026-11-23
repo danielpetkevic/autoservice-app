@@ -33,9 +33,9 @@ export default function ServicesIndex({
                 <header className="flex items-center justify-between gap-4">
                     <div className="space-y-1">
                         <h1 className="text-3xl font-semibold tracking-tight">
-                            {header}
+                            {t(header)}
                         </h1>
-                        <p className="text-muted-foreground">{paragraph}</p>
+                        <p className="text-muted-foreground">{t(paragraph)}</p>
                     </div>
 
                     {can.create && (

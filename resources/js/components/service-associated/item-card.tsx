@@ -289,7 +289,7 @@ export default function ItemCard({
 
                                     <div className="items-left flex min-w-0 flex-col gap-1">
                                         <p className="text-xs text-muted-foreground">
-                                            Stock quantity
+                                            {t('fields.stock_quantity')}
                                         </p>
 
                                         <div className="flex items-center gap-1">
@@ -386,7 +386,7 @@ export default function ItemCard({
                     <Button variant="outline" className="w-3/5 flex-1" asChild>
                         <Link href={editUrl}>
                             <Pencil className="size-4" />
-                            Edit
+                            {t('common.edit')}
                         </Link>
                     </Button>
                 )}
@@ -398,7 +398,7 @@ export default function ItemCard({
                         onClick={handleDelete}
                     >
                         <Trash2 className="size-4" />
-                        Delete
+                        {t('common.delete')}
                     </Button>
                 )}
             </CardFooter>

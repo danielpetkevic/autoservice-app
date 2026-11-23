@@ -56,7 +56,11 @@
         "delete_confirm": "Are you sure you want to delete \"{{name}}\"?",
         "toggle_sidebar": "Toggle Sidebar",
         "sidebar": "Sidebar",
-        "mobile_sidebar_description": "Displays the mobile sidebar."
+        "mobile_sidebar_description": "Displays the mobile sidebar.",
+        "language": "Language",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     },
     "dashboard": {
         "title": "Dashboard",
@@ -81,7 +85,11 @@
         "no_repairs": "No assigned repairs",
         "new_repairs": "New repair orders will appear here.",
         "repair_order": "Repair order #{{id}}",
-        "start_date": "Start date"
+        "start_date": "Start date",
+        "users": "Users",
+        "vehicles_label": "Vehicles",
+        "appointments_label": "Appointments",
+        "repair_orders": "Repair orders"
     },
     "welcome": {
         "title": "Welcome",

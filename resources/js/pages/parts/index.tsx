@@ -19,22 +19,22 @@ export default function PartsIndex({ parts, header, paragraph, can }: Props) {
     const { t } = useTranslation();
     return (
         <>
-            <Head title={header} />
+            <Head title={t(header)} />
 
             <div className="space-y-8 p-6">
                 <header className="flex items-center justify-between gap-4">
                     <div className="space-y-1">
                         <h1 className="text-3xl font-semibold tracking-tight">
-                            {header}
+                            {t(header)}
                         </h1>
-                        <p className="text-muted-foreground">{paragraph}</p>
+                        <p className="text-muted-foreground">{t(paragraph)}</p>
                     </div>
 
                     {can.create && (
                         <Button size="lg" asChild>
                             <Link href="/parts/create">
                                 <Plus className="size-4" />
-                                Add {header.slice(0, -1)}
+                                {t('listings.add_part')}
                             </Link>
                         </Button>
                     )}
