@@ -7,6 +7,7 @@ import {
     destroy as serviceCategoryDestroy,
 } from '@/routes/service_categories';
 import type { ServiceCategory } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     categories: {
@@ -25,6 +26,7 @@ export default function ServiceCategoriesIndex({
     paragraph,
     can,
 }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <Head title={header} />
@@ -42,7 +44,7 @@ export default function ServiceCategoriesIndex({
                         <Button size="lg" asChild>
                             <Link href="/service_categories/create">
                                 <Plus className="size-4" />
-                                Add Category
+                                {t('listings.add_category')}
                             </Link>
                         </Button>
                     )}
@@ -53,10 +55,10 @@ export default function ServiceCategoriesIndex({
                         <FolderOpen className="size-10 text-muted-foreground" />
                         <div className="space-y-1">
                             <h2 className="font-semibold">
-                                No service categories found
+                                {t('listings.no_categories')}
                             </h2>
                             <p className="text-sm text-muted-foreground">
-                                Create a category to organize your services.
+                                {t('listings.create_category_empty')}
                             </p>
                         </div>
                     </div>

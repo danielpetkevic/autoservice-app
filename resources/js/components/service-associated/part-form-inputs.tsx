@@ -2,6 +2,7 @@ import FormField from '@/components/forms/form-field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { Part } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     errors: {
@@ -18,18 +19,19 @@ interface Props {
 }
 
 export default function PartFormInputs({ errors, part }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <FormField
                 name="name"
-                label="Part Name"
+                label={t('fields.part_name')}
                 error={errors.name}
                 required
             >
                 <Input
                     id="name"
                     name="name"
-                    placeholder="Engine Repair"
+                    placeholder={t('placeholders.category')}
                     maxLength={100}
                     required
                     autoFocus
@@ -38,11 +40,16 @@ export default function PartFormInputs({ errors, part }: Props) {
                 />
             </FormField>
 
-            <FormField name="sku" label="Part SKU" error={errors.sku} required>
+            <FormField
+                name="sku"
+                label={t('fields.part_sku')}
+                error={errors.sku}
+                required
+            >
                 <Input
                     id="sku"
                     name="sku"
-                    placeholder="PART-NAME-52755"
+                    placeholder={t('placeholders.part_sku')}
                     maxLength={100}
                     required
                     autoFocus
@@ -53,25 +60,30 @@ export default function PartFormInputs({ errors, part }: Props) {
 
             <FormField
                 name="description"
-                label="Description"
+                label={t('fields.description')}
                 error={errors.description}
-                description="Optional. Describe the part."
+                description={t('part.description_help')}
             >
                 <Textarea
                     id="description"
                     name="description"
-                    placeholder="Describe the part..."
+                    placeholder={t('placeholders.description_part')}
                     rows={4}
                     defaultValue={part?.description ?? ''}
                     aria-invalid={!!errors.description}
                 />
             </FormField>
 
-            <FormField name="price" label="Price" error={errors.price} required>
+            <FormField
+                name="price"
+                label={t('fields.price')}
+                error={errors.price}
+                required
+            >
                 <Input
                     id="price"
                     name="price"
-                    placeholder="0.00"
+                    placeholder={t('placeholders.price')}
                     type="number"
                     step="0.01"
                     required

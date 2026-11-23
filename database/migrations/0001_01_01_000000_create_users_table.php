@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('number')->nullable();
             $table->string('role')->default('user');
+            $table->string('locale', 5)->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -11,12 +11,14 @@ import {
     destroy as vehicleDestroy,
 } from '@/routes/vehicles';
 import type { Vehicle } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     vehicle: Vehicle;
 }
 
 export default function VehicleCard({ vehicle }: Props) {
+    const { t } = useTranslation();
     return (
         <Card
             key={vehicle.id}
@@ -31,7 +33,9 @@ export default function VehicleCard({ vehicle }: Props) {
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline" size="sm" asChild>
-                        <Link href={vehicleShow(vehicle.id)}>See Details</Link>
+                        <Link href={vehicleShow(vehicle.id)}>
+                            {t('listings.see_details')}
+                        </Link>
                     </Button>
                     {vehicle.can.delete && (
                         <Button
@@ -40,18 +44,14 @@ export default function VehicleCard({ vehicle }: Props) {
                             className="cursor-pointer"
                             onClick={(e) => {
                                 e.preventDefault();
-                                if (
-                                    confirm(
-                                        'Are you sure you want to delete this vehicle?',
-                                    )
-                                ) {
+                                if (confirm(t('vehicle.delete_confirm'))) {
                                     router.delete(
                                         vehicleDestroy.url(vehicle.id),
                                     );
                                 }
                             }}
                         >
-                            Delete
+                            {t('common.delete')}
                         </Button>
                     )}
                 </div>

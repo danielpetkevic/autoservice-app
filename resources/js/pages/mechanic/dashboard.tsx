@@ -8,6 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 
 interface RepairOrder {
     id: number;
@@ -26,25 +27,26 @@ interface Props {
 }
 
 export default function MechanicDashboard({ repairs }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Mechanic dashboard" />
+            <Head title={t('dashboard.mechanic_title')} />
             <div className="space-y-8 p-6">
                 <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div className="space-y-1">
                         <p className="text-sm font-medium text-primary">
-                            Workshop queue
+                            {t('dashboard.workshop_queue')}
                         </p>
                         <h1 className="text-3xl font-semibold tracking-tight">
-                            Mechanic dashboard
+                            {t('dashboard.mechanic_title')}
                         </h1>
                         <p className="text-muted-foreground">
-                            Review the repair orders assigned to you.
+                            {t('dashboard.repair_description')}
                         </p>
                     </div>
                     <Badge variant="secondary" className="w-fit gap-1.5">
                         <ClipboardCheck className="size-3.5" />
-                        {repairs.length} assigned
+                        {t('dashboard.assigned', { count: repairs.length })}
                     </Badge>
                 </header>
 
@@ -54,10 +56,10 @@ export default function MechanicDashboard({ repairs }: Props) {
                             <Wrench className="size-10 text-muted-foreground" />
                             <div>
                                 <h2 className="font-medium">
-                                    No assigned repairs
+                                    {t('dashboard.no_repairs')}
                                 </h2>
                                 <p className="text-sm text-muted-foreground">
-                                    New repair orders will appear here.
+                                    {t('dashboard.new_repairs')}
                                 </p>
                             </div>
                         </CardContent>
@@ -70,7 +72,9 @@ export default function MechanicDashboard({ repairs }: Props) {
                                     <CardHeader className="flex-row items-start justify-between gap-4">
                                         <div className="space-y-1">
                                             <CardTitle>
-                                                Repair order #{repair.id}
+                                                {t('dashboard.repair_order', {
+                                                    id: repair.id,
+                                                })}
                                             </CardTitle>
                                             <CardDescription>
                                                 {
@@ -93,7 +97,7 @@ export default function MechanicDashboard({ repairs }: Props) {
                                     <CardContent>
                                         <p className="text-sm text-muted-foreground">
                                             <span className="font-medium text-foreground">
-                                                Start date:
+                                                {t('dashboard.start_date')}:
                                             </span>{' '}
                                             {repair.start_date
                                                 ? new Date(

@@ -19,8 +19,8 @@ class StorePartRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'sku.regex' => 'SKU must follow the format PART-NAME-12345 (uppercase letters and exactly 5 digits).',
-            'sku.unique' => 'This SKU already exists.',
+            'sku.regex' => 'validation.sku_format',
+            'sku.unique' => 'validation.sku_unique',
         ];
     }
 

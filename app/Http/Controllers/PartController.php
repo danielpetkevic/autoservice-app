@@ -33,8 +33,8 @@ class PartController extends Controller
 
         return inertia('parts/index', [
             'parts' => $parts,
-            'header' => 'Parts',
-            'paragraph' => 'Browse and manage AutoService parts.',
+            'header' => 'listings.parts',
+            'paragraph' => 'listings.parts_description',
             'can' => [
                 'create' => Gate::allows('create', Part::class),
             ],
@@ -49,8 +49,8 @@ class PartController extends Controller
         Gate::authorize('create', Part::class);
 
         return inertia('parts/create', [
-            'header' => 'Add Part',
-            'paragraph' => 'Add a new part to your inventory.',
+            'header' => 'listings.add_part',
+            'paragraph' => 'forms.part_description',
         ]);
     }
 
@@ -70,7 +70,7 @@ class PartController extends Controller
 
         return redirect()
             ->route('parts.index')
-            ->with('success', 'Part created successfully.');
+            ->with('success', 'flash.part_created');
     }
 
     /**
@@ -96,7 +96,7 @@ class PartController extends Controller
 
         return redirect()
             ->route('parts.index')
-            ->with('success', 'Part updated successfully.');
+            ->with('success', 'flash.part_updated');
     }
 
     /**
@@ -110,7 +110,7 @@ class PartController extends Controller
 
         return redirect()
             ->route('parts.index')
-            ->with('success', 'Part deleted successfully.');
+            ->with('success', 'flash.part_deleted');
     }
 
     /**
@@ -150,14 +150,14 @@ class PartController extends Controller
             if ($updated === 0) {
                 return back()->with(
                     'error',
-                    'Stock quantity cannot be negative.'
+                    'errors.stock_negative'
                 );
             }
         }
 
         return back()->with(
             'success',
-            'Stock quantity updated successfully.'
+            'flash.stock_updated'
         );
     }
 }

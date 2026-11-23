@@ -22,6 +22,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
+import { useTranslation } from 'react-i18next';
 
 interface Item {
     id: number;
@@ -61,6 +62,7 @@ export default function ItemCard({
     type,
     can,
 }: Props) {
+    const { t } = useTranslation();
     //additional logic for service and part items
 
     const isService = type === 'service';
@@ -69,7 +71,11 @@ export default function ItemCard({
     const stock = item.stock_quantity ?? 0;
 
     const stockStatus =
-        stock === 0 ? 'Out of Stock' : stock <= 5 ? 'Low Stock' : 'In Stock';
+        stock === 0
+            ? t('inventory.out_of_stock')
+            : stock <= 5
+              ? t('inventory.low_stock')
+              : t('inventory.in_stock');
 
     const formatDuration = (minutes: number) => {
         const hours = Math.floor(minutes / 60);
@@ -82,7 +88,7 @@ export default function ItemCard({
     };
 
     const handleDelete = () => {
-        if (window.confirm(`Are you sure you want to delete "${item.name}"?`)) {
+        if (window.confirm(t('common.delete_confirm', { name: item.name }))) {
             router.delete(deleteUrl, {
                 preserveScroll: true,
             });
@@ -184,14 +190,16 @@ export default function ItemCard({
                                         : 'text-muted-foreground'
                                 }`}
                             >
-                                {isActive ? 'Active' : 'Inactive'}
+                                {isActive
+                                    ? t('common.active')
+                                    : t('common.inactive')}
                             </span>
 
                             <Switch
                                 checked={isActive}
                                 onCheckedChange={handleToggle}
                                 disabled={isUpdating || !can?.update}
-                                aria-label={`${isActive ? 'Deactivate' : 'Activate'} ${item.name}`}
+                                aria-label={`${isActive ? t('inventory.deactivate') : t('inventory.activate')} ${item.name}`}
                                 className="cursor-pointer"
                             />
                         </div>
@@ -214,7 +222,8 @@ export default function ItemCard({
                 <div className="space-y-1.5">
                     {isService && (
                         <p className="text-xs font-medium text-muted-foreground">
-                            {item.service_category?.name ?? 'No category'}
+                            {item.service_category?.name ??
+                                t('inventory.no_category')}
                         </p>
                     )}
 
@@ -243,7 +252,9 @@ export default function ItemCard({
 
                                 <div className="min-w-0">
                                     <p className="text-xs text-muted-foreground">
-                                        {isPart ? 'Unit price' : 'Base price'}
+                                        {isPart
+                                            ? t('inventory.unit_price')
+                                            : t('inventory.base_price')}
                                     </p>
                                     <p className="font-semibold">
                                         {item.price != null

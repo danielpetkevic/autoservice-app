@@ -3,21 +3,23 @@ import CategoryFormInputs from '@/components/service-associated/category-form-in
 import { index, store } from '@/routes/service_categories';
 import { Form, Head } from '@inertiajs/react';
 import { FolderPlus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function ServiceCategoryCreate() {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Create Service Category" />
+            <Head title={t('forms.create_category')} />
 
             <Form {...store.form()}>
                 {({ processing, errors }) => (
                     <FormCard
-                        title="Create Service Category"
-                        description="Organize your auto repair services into categories."
+                        title={t('forms.create_category')}
+                        description={t('forms.category_description')}
                         icon={<FolderPlus className="size-6" />}
                         backUrl={index.url()}
-                        backLabel="Back to categories"
-                        submitLabel="Create Category"
+                        backLabel={t('forms.back_to_categories')}
+                        submitLabel={t('forms.create_category_button')}
                         processing={processing}
                     >
                         <CategoryFormInputs errors={errors} />

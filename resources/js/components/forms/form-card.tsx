@@ -10,6 +10,7 @@ import {
 import { Link } from '@inertiajs/react';
 import { ArrowLeft, LoaderCircle, Save } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface FormCardProps {
     title: string;
@@ -32,12 +33,16 @@ export default function FormCard({
     icon,
     children,
 }: FormCardProps) {
+    const { t } = useTranslation();
+    const resolvedBackLabel =
+        backLabel === 'Back' ? t('common.back') : backLabel;
+
     return (
         <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
             <Button variant="ghost" size="sm" asChild>
                 <Link href={backUrl}>
                     <ArrowLeft className="size-4" />
-                    {backLabel}
+                    {resolvedBackLabel}
                 </Link>
             </Button>
 
@@ -62,7 +67,7 @@ export default function FormCard({
 
                 <CardFooter className="flex justify-end gap-3 border-t pt-5">
                     <Button variant="outline" asChild>
-                        <Link href={backUrl}>Cancel</Link>
+                        <Link href={backUrl}>{t('common.cancel')}</Link>
                     </Button>
 
                     <Button type="submit" disabled={processing}>

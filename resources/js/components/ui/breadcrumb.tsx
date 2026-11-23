@@ -2,6 +2,7 @@ import * as React from "react"
 import { cn } from "cn"
 import { Slot } from "radix-ui"
 import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react"
+import { useTranslation } from "react-i18next"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -92,6 +93,7 @@ function BreadcrumbEllipsis({
   className,
   ...props
 }: React.ComponentProps<"span">) {
+  const { t } = useTranslation()
   return (
     <span
       data-slot="breadcrumb-ellipsis"
@@ -105,7 +107,7 @@ function BreadcrumbEllipsis({
     >
       <DotsThreeIcon
       />
-      <span className="sr-only">More</span>
+      <span className="sr-only">{t("common.more")}</span>
     </span>
   )
 }

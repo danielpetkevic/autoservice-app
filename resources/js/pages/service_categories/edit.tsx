@@ -4,25 +4,29 @@ import { index, update } from '@/routes/service_categories';
 import { Form, Head } from '@inertiajs/react';
 import { Pencil } from 'lucide-react';
 import type { ServiceCategory } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     category: Pick<ServiceCategory, 'id' | 'name' | 'description'>;
 }
 
 export default function ServiceCategoryEdit({ category }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title={`Edit ${category.name}`} />
+            <Head title={t('forms.edit_category')} />
 
             <Form {...update.form(category.id)}>
                 {({ processing, errors }) => (
                     <FormCard
-                        title="Edit Service Category"
-                        description={`Update the details of ${category.name}.`}
+                        title={t('forms.edit_category')}
+                        description={t('forms.update_category', {
+                            name: category.name,
+                        })}
                         icon={<Pencil className="size-6" />}
                         backUrl={index.url()}
-                        backLabel="Back to categories"
-                        submitLabel="Save Changes"
+                        backLabel={t('forms.back_to_categories')}
+                        submitLabel={t('forms.save_changes')}
                         processing={processing}
                     >
                         <CategoryFormInputs

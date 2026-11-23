@@ -4,25 +4,27 @@ import type { ServiceCategory } from '@/types';
 import { index, store } from '@/routes/services';
 import { Form, Head } from '@inertiajs/react';
 import { Wrench } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     categories: Pick<ServiceCategory, 'id' | 'name'>[];
 }
 
 export default function ServiceCreate({ categories }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Create Service" />
+            <Head title={t('forms.create_service')} />
 
             <Form {...store.form()}>
                 {({ processing, errors }) => (
                     <FormCard
-                        title="Create Service"
-                        description="Add a new service to your AutoService catalog."
+                        title={t('forms.create_service')}
+                        description={t('forms.service_description')}
                         icon={<Wrench className="size-6" />}
                         backUrl={index.url()}
-                        backLabel="Back to services"
-                        submitLabel="Create Service"
+                        backLabel={t('forms.back_to_services')}
+                        submitLabel={t('forms.create_service_button')}
                         processing={processing}
                     >
                         <ServiceFormInputs

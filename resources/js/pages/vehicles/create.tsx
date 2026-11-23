@@ -13,19 +13,21 @@ import { Label } from '@/components/ui/label';
 import { index, store } from '@/routes/vehicles';
 import { Form, Head, Link } from '@inertiajs/react';
 import { ArrowLeft, CarFront, LoaderCircle, Save } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function VehicleCreate() {
     const currentYear = new Date().getFullYear();
+    const { t } = useTranslation();
 
     return (
         <>
-            <Head title="Add Vehicle" />
+            <Head title={t('vehicle.add_title')} />
 
             <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
                 <Button variant="ghost" size="sm" asChild>
                     <Link href={index()}>
                         <ArrowLeft className="size-4" />
-                        Back to vehicles
+                        {t('vehicle.back_to_vehicles')}
                     </Link>
                 </Button>
 
@@ -37,10 +39,10 @@ export default function VehicleCreate() {
                             </div>
                             <div>
                                 <CardTitle className="text-xl">
-                                    Add New Vehicle
+                                    {t('vehicle.add_title')}
                                 </CardTitle>
                                 <CardDescription>
-                                    Enter your vehicle information below.
+                                    {t('vehicle.add_description')}
                                 </CardDescription>
                             </div>
                         </div>
@@ -51,11 +53,15 @@ export default function VehicleCreate() {
                             <>
                                 <CardContent className="grid gap-5 py-6 sm:grid-cols-2">
                                     <div className="grid gap-2">
-                                        <Label htmlFor="brand">Brand</Label>
+                                        <Label htmlFor="brand">
+                                            {t('fields.brand')}
+                                        </Label>
                                         <Input
                                             id="brand"
                                             name="brand"
-                                            placeholder="Toyota"
+                                            placeholder={t(
+                                                'placeholders.vehicle_brand',
+                                            )}
                                             required
                                             maxLength={255}
                                         />
@@ -63,11 +69,15 @@ export default function VehicleCreate() {
                                     </div>
 
                                     <div className="grid gap-2">
-                                        <Label htmlFor="model">Model</Label>
+                                        <Label htmlFor="model">
+                                            {t('fields.model')}
+                                        </Label>
                                         <Input
                                             id="model"
                                             name="model"
-                                            placeholder="Corolla"
+                                            placeholder={t(
+                                                'placeholders.vehicle_model',
+                                            )}
                                             required
                                             maxLength={255}
                                         />
@@ -76,7 +86,7 @@ export default function VehicleCreate() {
 
                                     <div className="grid gap-2">
                                         <Label htmlFor="year">
-                                            Manufacturing Year
+                                            {t('fields.year')}
                                         </Label>
                                         <Input
                                             id="year"
@@ -92,12 +102,14 @@ export default function VehicleCreate() {
 
                                     <div className="grid gap-2">
                                         <Label htmlFor="license_plate">
-                                            License Plate
+                                            {t('fields.license_plate')}
                                         </Label>
                                         <Input
                                             id="license_plate"
                                             name="license_plate"
-                                            placeholder="ABC123"
+                                            placeholder={t(
+                                                'placeholders.license_plate',
+                                            )}
                                             maxLength={255}
                                             className="uppercase"
                                             required
@@ -109,27 +121,26 @@ export default function VehicleCreate() {
 
                                     <div className="grid gap-2 sm:col-span-2">
                                         <Label htmlFor="vin">
-                                            Vehicle Identification Number (VIN)
+                                            {t('fields.vin')}
                                         </Label>
                                         <Input
                                             id="vin"
                                             name="vin"
-                                            placeholder="JTDBR32E720123456"
+                                            placeholder={t('placeholders.vin')}
                                             minLength={17}
                                             maxLength={17}
                                             className="font-mono uppercase"
                                             required
                                         />
                                         <p className="text-xs text-muted-foreground">
-                                            Enter the 17-character vehicle
-                                            identification number.
+                                            {t('vehicle.vin_help')}
                                         </p>
                                         <InputError message={errors.vin} />
                                     </div>
 
                                     <div className="grid gap-2 sm:col-span-2">
                                         <Label htmlFor="mileage">
-                                            Mileage (km)
+                                            {t('fields.mileage')}
                                         </Label>
                                         <Input
                                             id="mileage"
@@ -137,7 +148,9 @@ export default function VehicleCreate() {
                                             type="number"
                                             min={0}
                                             step={1}
-                                            placeholder="150000"
+                                            placeholder={t(
+                                                'placeholders.mileage',
+                                            )}
                                             required
                                         />
                                         <InputError message={errors.mileage} />
@@ -146,7 +159,9 @@ export default function VehicleCreate() {
 
                                 <CardFooter className="flex justify-end gap-3 border-t pt-5">
                                     <Button variant="outline" asChild>
-                                        <Link href={index()}>Cancel</Link>
+                                        <Link href={index()}>
+                                            {t('common.cancel')}
+                                        </Link>
                                     </Button>
 
                                     <Button type="submit" disabled={processing}>

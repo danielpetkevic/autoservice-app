@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 import { FolderOpen, Plus } from 'lucide-react';
 import { edit as partEdit, destroy as partDestroy } from '@/routes/parts';
 import type { Part } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     parts: { data: Part[] };
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function PartsIndex({ parts, header, paragraph, can }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <Head title={header} />
@@ -42,9 +44,11 @@ export default function PartsIndex({ parts, header, paragraph, can }: Props) {
                     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed p-12 text-center">
                         <FolderOpen className="size-10 text-muted-foreground" />
                         <div className="space-y-1">
-                            <h2 className="font-semibold">No parts found</h2>
+                            <h2 className="font-semibold">
+                                {t('listings.no_parts')}
+                            </h2>
                             <p className="text-sm text-muted-foreground">
-                                Create a part to add to your inventory.
+                                {t('listings.create_part_empty')}
                             </p>
                         </div>
                     </div>

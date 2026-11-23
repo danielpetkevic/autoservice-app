@@ -3,21 +3,23 @@ import PartFormInputs from '@/components/service-associated/part-form-inputs';
 import { index, store } from '@/routes/parts';
 import { Form, Head } from '@inertiajs/react';
 import { Package } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function PartCreate() {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Create Part" />
+            <Head title={t('forms.create_part')} />
 
             <Form {...store.form()}>
                 {({ processing, errors }) => (
                     <FormCard
-                        title="Create Part"
-                        description="Add a new part to your AutoService inventory."
+                        title={t('forms.create_part')}
+                        description={t('forms.part_description')}
                         icon={<Package className="size-6" />}
                         backUrl={index.url()}
-                        backLabel="Back to parts"
-                        submitLabel="Create Part"
+                        backLabel={t('forms.back_to_parts')}
+                        submitLabel={t('forms.create_part_button')}
                         processing={processing}
                     >
                         <PartFormInputs errors={errors} />

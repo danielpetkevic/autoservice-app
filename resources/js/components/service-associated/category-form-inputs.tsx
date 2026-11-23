@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 import type { ServiceCategory } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     errors: {
@@ -13,18 +14,19 @@ interface Props {
 }
 
 export default function CategoryFormInputs({ errors, category }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <FormField
                 name="name"
-                label="Category Name"
+                label={t('fields.category_name')}
                 error={errors.name}
                 required
             >
                 <Input
                     id="name"
                     name="name"
-                    placeholder="Engine Repair"
+                    placeholder={t('placeholders.category')}
                     maxLength={100}
                     required
                     autoFocus
@@ -35,14 +37,14 @@ export default function CategoryFormInputs({ errors, category }: Props) {
 
             <FormField
                 name="description"
-                label="Description"
+                label={t('fields.description')}
                 error={errors.description}
-                description="Optional. Describe the services included in this category."
+                description={t('category.description_help')}
             >
                 <Textarea
                     id="description"
                     name="description"
-                    placeholder="Describe the category..."
+                    placeholder={t('placeholders.description_category')}
                     rows={4}
                     defaultValue={category?.description ?? ''}
                     aria-invalid={!!errors.description}

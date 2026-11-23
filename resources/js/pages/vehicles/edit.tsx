@@ -14,6 +14,7 @@ import { show, update } from '@/routes/vehicles';
 import { Form, Head, Link } from '@inertiajs/react';
 import { ArrowLeft, CarFront, LoaderCircle, Save } from 'lucide-react';
 import type { Vehicle } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     vehicle: Vehicle;
@@ -21,16 +22,17 @@ interface Props {
 
 export default function VehicleEdit({ vehicle }: Props) {
     const currentYear = new Date().getFullYear();
+    const { t } = useTranslation();
 
     return (
         <>
-            <Head title={`Edit ${vehicle.brand} ${vehicle.model}`} />
+            <Head title={t('vehicle.edit_title')} />
 
             <div className="mx-auto w-full max-w-3xl space-y-6 p-6">
                 <Button variant="ghost" size="sm" asChild>
                     <Link href={show(vehicle.id)}>
                         <ArrowLeft className="size-4" />
-                        Back to vehicle
+                        {t('vehicle.back_to_vehicle')}
                     </Link>
                 </Button>
 
@@ -43,11 +45,13 @@ export default function VehicleEdit({ vehicle }: Props) {
 
                             <div>
                                 <CardTitle className="text-xl">
-                                    Edit Vehicle
+                                    {t('vehicle.edit_title')}
                                 </CardTitle>
                                 <CardDescription>
-                                    Update {vehicle.brand} {vehicle.model}{' '}
-                                    information.
+                                    {t('vehicle.edit_description', {
+                                        brand: vehicle.brand,
+                                        model: vehicle.model,
+                                    })}
                                 </CardDescription>
                             </div>
                         </div>
@@ -58,7 +62,9 @@ export default function VehicleEdit({ vehicle }: Props) {
                             <>
                                 <CardContent className="grid gap-5 py-6 sm:grid-cols-2">
                                     <div className="grid gap-2">
-                                        <Label htmlFor="brand">Brand</Label>
+                                        <Label htmlFor="brand">
+                                            {t('fields.brand')}
+                                        </Label>
                                         <Input
                                             id="brand"
                                             name="brand"
@@ -70,7 +76,9 @@ export default function VehicleEdit({ vehicle }: Props) {
                                     </div>
 
                                     <div className="grid gap-2">
-                                        <Label htmlFor="model">Model</Label>
+                                        <Label htmlFor="model">
+                                            {t('fields.model')}
+                                        </Label>
                                         <Input
                                             id="model"
                                             name="model"

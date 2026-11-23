@@ -7,6 +7,7 @@ import {
     destroy as serviceDestroy,
 } from '@/routes/services';
 import type { Service } from '@/types/service';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     services: { data: Service[] };
@@ -23,6 +24,7 @@ export default function ServicesIndex({
     paragraph,
     can,
 }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <Head title={header} />
@@ -40,7 +42,7 @@ export default function ServicesIndex({
                         <Button size="lg" asChild>
                             <Link href="/services/create">
                                 <Plus className="size-4" />
-                                Add Services
+                                {t('listings.add_service')}
                             </Link>
                         </Button>
                     )}
@@ -50,9 +52,11 @@ export default function ServicesIndex({
                     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed p-12 text-center">
                         <FolderOpen className="size-10 text-muted-foreground" />
                         <div className="space-y-1">
-                            <h2 className="font-semibold">No services found</h2>
+                            <h2 className="font-semibold">
+                                {t('listings.no_services')}
+                            </h2>
                             <p className="text-sm text-muted-foreground">
-                                Create a service to add to your offerings.
+                                {t('listings.create_service_empty')}
                             </p>
                         </div>
                     </div>

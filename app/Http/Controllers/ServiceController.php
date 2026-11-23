@@ -39,8 +39,8 @@ class ServiceController extends Controller
                 ->orderBy('name')
                 ->get(['id', 'name']),
 
-            'header' => 'Services',
-            'paragraph' => 'Browse and manage AutoService services.',
+            'header' => 'listings.services',
+            'paragraph' => 'listings.services_description',
             'can' => [
                 'create' => Gate::allows('create', Service::class),
             ],
@@ -72,7 +72,7 @@ class ServiceController extends Controller
 
         return redirect()
             ->route('services.index')
-            ->with('success', 'Service created successfully.');
+            ->with('success', 'flash.service_created');
     }
 
     /**
@@ -101,7 +101,7 @@ class ServiceController extends Controller
 
         return redirect()
             ->route('services.index')
-            ->with('success', 'Service updated successfully.');
+            ->with('success', 'flash.service_updated');
     }
 
     /**
@@ -117,7 +117,7 @@ class ServiceController extends Controller
         ) {
             return back()->with(
                 'error',
-                'This service is used in existing appointments or repair orders. Deactivate it instead.'
+                'errors.service_in_use'
             );
         }
 
@@ -125,7 +125,7 @@ class ServiceController extends Controller
 
         return redirect()
             ->route('services.index')
-            ->with('success', 'Service deleted successfully.');
+            ->with('success', 'flash.service_deleted');
     }
 
     /**
@@ -147,7 +147,7 @@ class ServiceController extends Controller
 
         return back()->with(
             'success',
-            'Service status updated successfully.'
+            'flash.service_status_updated'
         );
     }
 }

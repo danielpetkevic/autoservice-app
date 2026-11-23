@@ -26,8 +26,8 @@ class ServiceCategoryController extends Controller
                         'delete' => Gate::allows('delete', $category),
                     ],
                 ]),
-            'header' => 'Service Categories',
-            'paragraph' => 'Browse and manage your service categories.',
+            'header' => 'listings.categories',
+            'paragraph' => 'listings.categories_description',
             'can' => [
                 'create' => Gate::allows('create', ServiceCategory::class),
             ],
@@ -47,7 +47,7 @@ class ServiceCategoryController extends Controller
 
         ServiceCategory::create($request->validated());
 
-        return redirect()->route('service_categories.index')->with('success', 'Service category created successfully.');
+        return redirect()->route('service_categories.index')->with('success', 'flash.category_created');
     }
 
     public function edit(ServiceCategory $serviceCategory): Response
@@ -67,7 +67,7 @@ class ServiceCategoryController extends Controller
 
         $serviceCategory->update($request->validated());
 
-        return redirect()->route('service_categories.index')->with('success', 'Service category updated successfully.');
+        return redirect()->route('service_categories.index')->with('success', 'flash.category_updated');
     }
 
     public function destroy(ServiceCategory $serviceCategory): RedirectResponse
@@ -76,6 +76,6 @@ class ServiceCategoryController extends Controller
 
         $serviceCategory->delete();
 
-        return redirect()->route('service_categories.index')->with('success', 'Service category deleted successfully. Some services may have been moved to the "Uncategorized" category.');
+        return redirect()->route('service_categories.index')->with('success', 'flash.category_deleted');
     }
 }

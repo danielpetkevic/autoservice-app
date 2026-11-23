@@ -9,6 +9,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import type { Vehicle } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Appointment {
     id: number;
@@ -36,26 +37,29 @@ export default function ClientDashboard({
     appointments,
     userName,
 }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Client dashboard" />
+            <Head title={t('dashboard.client_title')} />
             <div className="space-y-8 p-6">
                 <header className="space-y-1">
                     <p className="text-sm font-medium text-primary">
-                        My AutoService
+                        {t('dashboard.client_brand')}
                     </p>
                     <h1 className="text-3xl font-semibold tracking-tight">
-                        Welcome, {userName}
+                        {t('dashboard.welcome', { name: userName })}
                     </h1>
                     <p className="text-muted-foreground">
-                        Manage your vehicles and upcoming service appointments.
+                        {t('dashboard.client_description')}
                     </p>
                 </header>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                     <Card>
                         <CardHeader className="flex-row items-center justify-between">
-                            <CardDescription>My vehicles</CardDescription>
+                            <CardDescription>
+                                {t('dashboard.my_vehicles')}
+                            </CardDescription>
                             <Car className="size-5 text-primary" />
                         </CardHeader>
                         <CardContent className="text-3xl font-semibold">
@@ -64,7 +68,9 @@ export default function ClientDashboard({
                     </Card>
                     <Card>
                         <CardHeader className="flex-row items-center justify-between">
-                            <CardDescription>Appointments</CardDescription>
+                            <CardDescription>
+                                {t('dashboard.appointments')}
+                            </CardDescription>
                             <CalendarDays className="size-5 text-primary" />
                         </CardHeader>
                         <CardContent className="text-3xl font-semibold">

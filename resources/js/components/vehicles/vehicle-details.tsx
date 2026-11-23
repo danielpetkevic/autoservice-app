@@ -22,6 +22,7 @@ import {
     edit as vehicleEdit,
 } from '@/routes/vehicles';
 import type { Vehicle } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     vehicle: Vehicle;
@@ -34,31 +35,32 @@ interface VehicleDetail {
 }
 
 export default function VehicleDetails({ vehicle }: Props) {
+    const { t } = useTranslation();
     const details: VehicleDetail[] = [
         {
-            label: 'Year',
+            label: t('vehicle.year'),
             value: vehicle.year,
             icon: CalendarDays,
         },
         {
-            label: 'License Plate',
+            label: t('vehicle.license_plate'),
             value: vehicle.license_plate,
             icon: CarFront,
         },
         {
-            label: 'VIN',
+            label: t('vehicle.vin'),
             value: vehicle.vin,
             icon: Fingerprint,
         },
         {
-            label: 'Mileage',
-            value: `${vehicle.mileage.toLocaleString('en-US')} km`,
+            label: t('vehicle.mileage'),
+            value: `${vehicle.mileage.toLocaleString('en-US')} ${t('vehicle.unit_km')}`,
             icon: Gauge,
         },
     ];
 
     const handleDelete = (): void => {
-        if (!window.confirm('Are you sure you want to delete this vehicle?')) {
+        if (!window.confirm(t('vehicle.delete_confirm'))) {
             return;
         }
 
@@ -78,7 +80,7 @@ export default function VehicleDetails({ vehicle }: Props) {
                             {vehicle.brand} {vehicle.model}
                         </CardTitle>
                         <CardDescription className="mt-1">
-                            Vehicle details and specifications
+                            {t('vehicle.details')}
                         </CardDescription>
                     </div>
                 </div>
@@ -86,7 +88,7 @@ export default function VehicleDetails({ vehicle }: Props) {
                     <Button variant="outline" asChild>
                         <Link href={vehicleEdit(vehicle.id)}>
                             <Pencil className="size-4" />
-                            Edit Vehicle
+                            {t('vehicle.edit_title')}
                         </Link>
                     </Button>
                 )}
@@ -124,7 +126,7 @@ export default function VehicleDetails({ vehicle }: Props) {
                         className="cursor-pointer"
                     >
                         <Trash2 className="size-4" />
-                        Delete Vehicle
+                        {t('vehicle.delete_vehicle')}
                     </Button>
                 </CardFooter>
             )}

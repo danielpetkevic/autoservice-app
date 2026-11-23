@@ -13,6 +13,7 @@ import type { ServiceFormData } from '@/types/service';
 import type { ServiceCategory } from '@/types/service-category';
 import { Clock3, Euro } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     service?: ServiceFormData;
@@ -32,6 +33,7 @@ export default function ServiceFormInputs({
     service,
     categories,
 }: Props) {
+    const { t } = useTranslation();
     const [categoryId, setCategoryId] = useState(
         service?.category_id?.toString() ?? 'none',
     );
@@ -42,14 +44,14 @@ export default function ServiceFormInputs({
         <>
             <FormField
                 name="name"
-                label="Service Name"
+                label={t('fields.service_name')}
                 error={errors.name}
                 required
             >
                 <Input
                     id="name"
                     name="name"
-                    placeholder="Oil Change"
+                    placeholder={t('placeholders.service')}
                     maxLength={150}
                     required
                     autoFocus
@@ -60,9 +62,9 @@ export default function ServiceFormInputs({
 
             <FormField
                 name="category_id"
-                label="Service Category"
+                label={t('fields.service_category')}
                 error={errors.category_id}
-                description="Optional. Select a category or leave the service uncategorized."
+                description={t('service.category_help')}
             >
                 <Select value={categoryId} onValueChange={setCategoryId}>
                     <SelectTrigger
@@ -96,14 +98,14 @@ export default function ServiceFormInputs({
 
             <FormField
                 name="description"
-                label="Description"
+                label={t('fields.description')}
                 error={errors.description}
-                description="Optional. Describe what this service includes."
+                description={t('service.description_help')}
             >
                 <Textarea
                     id="description"
                     name="description"
-                    placeholder="Describe the service..."
+                    placeholder={t('placeholders.description_service')}
                     rows={4}
                     defaultValue={service?.description ?? ''}
                     aria-invalid={!!errors.description}
@@ -113,7 +115,7 @@ export default function ServiceFormInputs({
             <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
                     name="price"
-                    label="Base Price (€)"
+                    label={t('fields.base_price')}
                     error={errors.price}
                     required
                 >
@@ -126,7 +128,7 @@ export default function ServiceFormInputs({
                             type="number"
                             min="0"
                             step="0.01"
-                            placeholder="49.99"
+                            placeholder={t('placeholders.service_price')}
                             className="pl-9"
                             required
                             defaultValue={service?.price ?? ''}
@@ -137,7 +139,7 @@ export default function ServiceFormInputs({
 
                 <FormField
                     name="duration"
-                    label="Duration (minutes)"
+                    label={t('fields.duration')}
                     error={errors.duration}
                 >
                     <div className="relative">
@@ -149,7 +151,7 @@ export default function ServiceFormInputs({
                             type="number"
                             min="1"
                             step="1"
-                            placeholder="60"
+                            placeholder={t('placeholders.duration')}
                             className="pl-9"
                             defaultValue={service?.duration ?? ''}
                             aria-invalid={!!errors.duration}
@@ -161,11 +163,11 @@ export default function ServiceFormInputs({
             <div className="flex items-center justify-between gap-4 rounded-xl border p-4">
                 <div className="space-y-1">
                     <label htmlFor="is_active" className="text-sm font-medium">
-                        Active Service
+                        {t('fields.active_service')}
                     </label>
 
                     <p className="text-sm text-muted-foreground">
-                        Active services are available for booking.
+                        {t('service.active_help')}
                     </p>
                 </div>
 

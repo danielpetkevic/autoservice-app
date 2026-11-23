@@ -22,21 +22,21 @@ class VehicleController extends Controller
         $vehicles = Vehicle::query()->with('user');
 
         if ($user->hasRole('admin')) {
-            $header = 'Vehicle Management';
-            $paragraph = 'Manage user vehicles and their details.';
+            $header = 'listings.vehicle_management';
+            $paragraph = 'listings.vehicle_management_description';
         } elseif ($user->hasRole('client')) {
             $vehicles->where('user_id', $user->id);
 
-            $header = 'My Vehicles';
-            $paragraph = 'View and manage your registered vehicles.';
+            $header = 'listings.vehicles';
+            $paragraph = 'listings.vehicles_description';
         } elseif ($user->hasRole('mechanic')) {
             $vehicles->whereHas(
                 'appointments.repairOrder',
                 fn ($query) => $query->where('mechanic_id', $user->id)
             );
 
-            $header = 'Assigned Vehicles';
-            $paragraph = 'View vehicles associated with your assigned repairs.';
+            $header = 'listings.assigned_vehicles';
+            $paragraph = 'listings.assigned_vehicles_description';
         } else {
             abort(403);
         }
@@ -78,7 +78,7 @@ class VehicleController extends Controller
             ->vehicles()
             ->create($request->validated());
 
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully.');
+        return redirect()->route('vehicles.index')->with('success', 'flash.vehicle_created');
     }
 
     public function edit(Vehicle $vehicle): Response
@@ -98,7 +98,7 @@ class VehicleController extends Controller
 
         $vehicle->update($request->validated());
 
-        return redirect()->route('vehicles.show', $vehicle)->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('vehicles.show', $vehicle)->with('success', 'flash.vehicle_updated');
     }
 
     public function destroy(Vehicle $vehicle): RedirectResponse
@@ -107,6 +107,6 @@ class VehicleController extends Controller
 
         $vehicle->delete();
 
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted successfully.');
+        return redirect()->route('vehicles.index')->with('success', 'flash.vehicle_deleted');
     }
 }

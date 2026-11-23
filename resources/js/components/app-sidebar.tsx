@@ -27,6 +27,7 @@ import { index as serviceCategories } from '@/routes/service_categories';
 import { index as parts } from '@/routes/parts';
 import type { NavItem } from '@/types';
 import { index as services } from '@/routes/services';
+import { useTranslation } from 'react-i18next';
 
 type SidebarItem = NavItem & {
     permission?: string;
@@ -38,53 +39,54 @@ type AuthProps = {
     };
 };
 
-const mainNavItems: SidebarItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: ChartColumn,
-    },
-    {
-        title: 'Vehicles',
-        href: vehicles(),
-        icon: Car,
-        permission: 'vehicles.view',
-    },
-    {
-        title: 'Services',
-        href: services(),
-        icon: Wrench,
-        permission: 'services.update',
-    },
-    {
-        title: 'Service Categories',
-        href: serviceCategories(),
-        icon: FolderOpen,
-        permission: 'service_categories.manage',
-    },
-    {
-        title: 'Parts',
-        href: parts(),
-        icon: Package,
-        permission: 'parts.view',
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
-
 export function AppSidebar() {
     const { auth } = usePage<AuthProps>().props;
+    const { t } = useTranslation();
+
+    const mainNavItems: SidebarItem[] = [
+        {
+            title: t('navigation.dashboard'),
+            href: dashboard(),
+            icon: ChartColumn,
+        },
+        {
+            title: t('navigation.vehicles'),
+            href: vehicles(),
+            icon: Car,
+            permission: 'vehicles.view',
+        },
+        {
+            title: t('navigation.services'),
+            href: services(),
+            icon: Wrench,
+            permission: 'services.update',
+        },
+        {
+            title: t('navigation.service_categories'),
+            href: serviceCategories(),
+            icon: FolderOpen,
+            permission: 'service_categories.manage',
+        },
+        {
+            title: t('navigation.parts'),
+            href: parts(),
+            icon: Package,
+            permission: 'parts.view',
+        },
+    ];
+
+    const footerNavItems: NavItem[] = [
+        {
+            title: t('common.repository'),
+            href: 'https://github.com/laravel/react-starter-kit',
+            icon: FolderGit2,
+        },
+        {
+            title: t('common.documentation'),
+            href: 'https://laravel.com/docs/starter-kits#react',
+            icon: BookOpen,
+        },
+    ];
 
     const visibleNavItems = mainNavItems.filter(
         (item) =>

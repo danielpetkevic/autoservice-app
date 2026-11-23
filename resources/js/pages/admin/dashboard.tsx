@@ -7,6 +7,7 @@ import {
     CardDescription,
     CardHeader,
 } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     totalUsers: number;
@@ -21,6 +22,7 @@ export default function AdminDashboard({
     totalRepairOrders,
     totalAppointments,
 }: Props) {
+    const { t } = useTranslation();
     const totals = {
         totalUsers,
         totalVehicles,
@@ -37,17 +39,17 @@ export default function AdminDashboard({
 
     return (
         <>
-            <Head title="Admin dashboard" />
+            <Head title={t('dashboard.admin_title')} />
             <div className="space-y-8 p-6">
                 <header className="space-y-1">
                     <p className="text-sm font-medium text-primary">
-                        AutoService overview
+                        {t('dashboard.admin_overview')}
                     </p>
                     <h1 className="text-3xl font-semibold tracking-tight">
-                        Admin dashboard
+                        {t('dashboard.admin_title')}
                     </h1>
                     <p className="text-muted-foreground">
-                        Overview of your auto service business.
+                        {t('dashboard.admin_description')}
                     </p>
                 </header>
 
@@ -56,7 +58,7 @@ export default function AdminDashboard({
                         <Card key={statistic.key}>
                             <CardHeader className="flex-row items-center justify-between">
                                 <CardDescription>
-                                    {statistic.label}
+                                    {t(statistic.label)}
                                 </CardDescription>
                                 {(() => {
                                     const Icon = icons[statistic.key];
@@ -70,7 +72,7 @@ export default function AdminDashboard({
                                     {totals[statistic.key]}
                                 </p>
                                 <p className="mt-1 text-xs text-muted-foreground">
-                                    Current total
+                                    {t('common.current_total')}
                                 </p>
                             </CardContent>
                         </Card>

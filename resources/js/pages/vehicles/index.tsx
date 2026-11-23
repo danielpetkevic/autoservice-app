@@ -3,6 +3,7 @@ import { create as vehicleCreate } from '@/routes/vehicles';
 import { Button } from '@/components/ui/button';
 import VehicleCard from '@/components/vehicles/vehicle-card';
 import type { Vehicle } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     vehicles: {
@@ -21,6 +22,7 @@ export default function VehiclesIndex({
     paragraph,
     can,
 }: Props) {
+    const { t } = useTranslation();
     return (
         <>
             <Head title={header} />
@@ -36,7 +38,9 @@ export default function VehiclesIndex({
 
                     {can.create && (
                         <Button size="lg" asChild>
-                            <Link href={vehicleCreate()}>Add Vehicle</Link>
+                            <Link href={vehicleCreate()}>
+                                {t('listings.add_vehicle')}
+                            </Link>
                         </Button>
                     )}
                 </header>
@@ -45,13 +49,13 @@ export default function VehiclesIndex({
                     {vehicles.data.length === 0 ? (
                         <li className="col-span-full space-y-4 text-center">
                             <p className="text-muted-foreground">
-                                No vehicles found.
+                                {t('listings.no_vehicles_found')}
                             </p>
 
                             {can.create && (
                                 <Button variant="outline" asChild>
                                     <Link href={vehicleCreate()}>
-                                        Add Vehicle
+                                        {t('listings.add_vehicle')}
                                     </Link>
                                 </Button>
                             )}

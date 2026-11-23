@@ -4,6 +4,7 @@ import type { ServiceCategory, Service } from '@/types';
 import { index, store } from '@/routes/services';
 import { Form, Head } from '@inertiajs/react';
 import { Wrench } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     service: Service;
@@ -11,19 +12,20 @@ interface Props {
 }
 
 export default function ServiceEdit({ service, categories }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Edit Service" />
+            <Head title={t('forms.edit_service')} />
 
             <Form {...store.form()}>
                 {({ processing, errors }) => (
                     <FormCard
-                        title="Edit Service"
-                        description="Update the details of your service."
+                        title={t('forms.edit_service')}
+                        description={t('forms.edit_service_description')}
                         icon={<Wrench className="size-6" />}
                         backUrl={index.url()}
-                        backLabel="Back to services"
-                        submitLabel="Update Service"
+                        backLabel={t('forms.back_to_services')}
+                        submitLabel={t('forms.update_service_button')}
                         processing={processing}
                     >
                         <ServiceFormInputs
