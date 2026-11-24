@@ -25,7 +25,7 @@ export default function VehiclesIndex({
     const { t } = useTranslation();
     return (
         <>
-            <Head title={header} />
+            <Head title={t(header)} />
 
             <div className="space-y-8 p-6">
                 <header className="flex items-center justify-between gap-4">

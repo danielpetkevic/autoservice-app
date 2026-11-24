@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('vehicle_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->dateTime('appointment_at');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('scheduled');
             $table->text('notes')->nullable();
         });
     }

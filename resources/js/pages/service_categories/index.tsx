@@ -8,6 +8,7 @@ import {
 } from '@/routes/service_categories';
 import type { ServiceCategory } from '@/types';
 import { useTranslation } from 'react-i18next';
+import CategoryContent from '@/components/service-associated/cards/category-content';
 
 interface Props {
     categories: {
@@ -29,7 +30,7 @@ export default function ServiceCategoriesIndex({
     const { t } = useTranslation();
     return (
         <>
-            <Head title={header} />
+            <Head title={t(header)} />
 
             <div className="space-y-8 p-6">
                 <header className="flex items-center justify-between gap-4">
@@ -67,16 +68,16 @@ export default function ServiceCategoriesIndex({
                         {categories.data.map((category) => (
                             <li key={category.id}>
                                 <ItemCard
-                                    item={category}
                                     editUrl={serviceCategoryEdit.url(
                                         category.id,
                                     )}
                                     deleteUrl={serviceCategoryDestroy.url(
                                         category.id,
                                     )}
-                                    type="category"
                                     can={category.can}
-                                />
+                                >
+                                    <CategoryContent item={category} />
+                                </ItemCard>
                             </li>
                         ))}
                     </ul>

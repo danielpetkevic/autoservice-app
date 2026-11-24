@@ -1,6 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
     BookOpen,
+    Calendar,
     FolderGit2,
     ChartColumn,
     Car,
@@ -28,6 +29,7 @@ import { index as parts } from '@/routes/parts';
 import type { NavItem } from '@/types';
 import { index as services } from '@/routes/services';
 import { useTranslation } from 'react-i18next';
+import { index as appointments } from '@/routes/appointments';
 
 type SidebarItem = NavItem & {
     permission?: string;
@@ -72,6 +74,12 @@ export function AppSidebar() {
             href: parts(),
             icon: Package,
             permission: 'parts.view',
+        },
+        {
+            title: t('navigation.appointments'),
+            href: appointments(),
+            icon: Calendar,
+            permission: 'appointments.view',
         },
     ];
 

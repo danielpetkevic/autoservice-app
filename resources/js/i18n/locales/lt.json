@@ -4,7 +4,8 @@
         "vehicles": "Transporto priemonės",
         "services": "Paslaugos",
         "service_categories": "Paslaugų kategorijos",
-        "parts": "Detalės"
+        "parts": "Detalės",
+        "appointments": "Vizitai"
     },
     "services": {
         "title": "Paslaugų valdymas",
@@ -166,12 +167,19 @@
         "back_to_parts": "Atgal į detales",
         "back_to_services": "Atgal į paslaugas",
         "back_to_categories": "Atgal į kategorijas",
+        "back_to_appointments": "Atgal į vizitus",
         "submit_changes": "Pateikti pakeitimus",
         "save_changes": "Išsaugoti pakeitimus",
         "create_category_button": "Sukurti kategoriją",
         "create_part_button": "Sukurti detalę",
         "create_service_button": "Sukurti paslaugą",
-        "update_service_button": "Atnaujinti paslaugą"
+        "update_service_button": "Atnaujinti paslaugą",
+        "create_appointment": "Sukurti vizitą",
+        "create_appointment_description": "Suplanuokite naują techninio aptarnavimo vizitą savo transporto priemonei.",
+        "create_appointment_button": "Sukurti vizitą",
+        "update_appointment": "Atnaujinti vizitą",
+        "update_appointment_description": "Atnaujinkite savo suplanuoto techninio aptarnavimo vizito informaciją.",
+        "update_appointment_button": "Atnaujinti vizitą"
     },
     "fields": {
         "brand": "Markė",
@@ -196,7 +204,12 @@
         "stock_quantity": "Atsargų kiekis",
         "quantity": "Kiekis",
         "status": "Būsena",
-        "sku": "SKU"
+        "sku": "SKU",
+        "vehicle": "Transporto priemonė",
+        "services": "Paslaugos",
+        "appointment_at": "Vizito data ir laikas",
+        "appointment_select_services_help": "Pasirinkite vieną ar kelias paslaugas, kurias norite atlikti vizito metu.",
+        "notes": "Pastabos"
     },
     "placeholders": {
         "email": "el.pastas@example.com",
@@ -216,7 +229,10 @@
         "license_plate": "ABC123",
         "vin": "JTDBR32E720123456",
         "mileage": "150000",
-        "passkey_name": "pvz., MacBook Pro, iPhone"
+        "passkey_name": "pvz., MacBook Pro, iPhone",
+        "select_vehicle": "Pasirinkite transporto priemonę",
+        "appointment_notes": "Pridėkite bet kokias pastabas ar specialius nurodymus dėl vizito...",
+        "select_date": "Pasirinkite datą ir laiką vizitui"
     },
     "listings": {
         "parts": "Detalės",
@@ -242,7 +258,21 @@
         "assigned_vehicles_description": "Peržiūrėkite transporto priemones, susietas su jums priskirtais remonto darbais.",
         "no_vehicles_found": "Transporto priemonių nerasta.",
         "add_vehicle": "Pridėti transporto priemonę",
-        "see_details": "Peržiūrėti"
+        "see_details": "Peržiūrėti",
+        "appointments": "Vizitai",
+        "appointments_description": "Peržiūrėkite ir tvarkykite visus serviso vizitus.",
+        "my_appointments": "Mano vizitai",
+        "my_appointments_description": "Peržiūrėkite ir tvarkykite savo suplanuotus serviso vizitus.",
+        "no_appointments": "Vizitų nerasta.",
+        "create_appointment_empty": "Sukurkite vizitą, kad suplantuotumėte paslaugą.",
+        "add_appointment": "Pridėti vizitą",
+        "repair_orders": "Remonto užsakymai",
+        "repair_orders_description": "Peržiūrėkite ir tvarkykite visus remonto užsakymus.",
+        "my_repair_orders": "Mano remonto užsakymai",
+        "my_repair_orders_description": "Peržiūrėkite ir tvarkykite savo priskirtus remonto užsakymus.",
+        "no_repair_orders": "Remonto užsakymų nerasta.",
+        "create_repair_order_empty": "Sukurkite remonto užsakymą, kad sektumėte paslaugą.",
+        "add_repair_order": "Pridėti remonto užsakymą"
     },
     "vehicle": {
         "add_title": "Pridėti naują transporto priemonę",
@@ -341,7 +371,13 @@
         "vehicle_updated": "Transporto priemonė atnaujinta sėkmingai.",
         "vehicle_deleted": "Transporto priemonė ištrinta sėkmingai.",
         "profile_updated": "Profilis atnaujintas.",
-        "password_updated": "Slaptažodis atnaujintas."
+        "password_updated": "Slaptažodis atnaujintas.",
+        "appointment_created": "Vizita sukurta sėkmingai.",
+        "appointment_updated": "Vizita atnaujinta sėkmingai.",
+        "appointment_deleted": "Vizita ištrinta sėkmingai.",
+        "appointment_status_updated": "Vizitos būsena atnaujinta sėkmingai.",
+        "appointment_invalid_status": "Neteisinga vizitos būsena.",
+        "appointment_has_repair_order": "Ši vizita turi susijusį remonto užsakymą ir negali būti ištrinta."
     },
     "appearance": {
         "light": "Šviesi",
@@ -356,13 +392,23 @@
         "base_price": "Bazinė kaina",
         "activate": "Aktyvuoti",
         "deactivate": "Išjungti",
-        "no_category": "Be kategorijos"
+        "no_category": "Be kategorijos",
+        "no_description": "Aprašymas nepateiktas",
+        "duration": "Trukmė"
     },
     "category": {
         "description_help": "Nebūtina. Aprašykite šios kategorijos paslaugas."
     },
     "part": {
         "description_help": "Nebūtina. Aprašykite detalę."
+    },
+    "appointment": {
+        "scheduled": "Suplanuota",
+        "completed": "Transporto priemonė atvyko",
+        "cancelled": "Atšaukta",
+        "no_services": "Paslaugos nepasirinktos",
+        "complete": "Užbaigti vizitą",
+        "cancel": "Atšaukti vizitą"
     },
     "service": {
         "category_help": "Nebūtina. Pasirinkite kategoriją arba palikite paslaugą be kategorijos.",

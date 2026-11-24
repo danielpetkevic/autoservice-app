@@ -5,6 +5,7 @@ import { FolderOpen, Plus } from 'lucide-react';
 import { edit as partEdit, destroy as partDestroy } from '@/routes/parts';
 import type { Part } from '@/types';
 import { useTranslation } from 'react-i18next';
+import PartContent from '@/components/service-associated/cards/part-content';
 
 interface Props {
     parts: { data: Part[] };
@@ -57,12 +58,15 @@ export default function PartsIndex({ parts, header, paragraph, can }: Props) {
                         {parts.data.map((part) => (
                             <li key={part.id}>
                                 <ItemCard
-                                    item={part}
                                     editUrl={partEdit.url(part.id)}
                                     deleteUrl={partDestroy.url(part.id)}
-                                    type="part"
                                     can={part.can}
-                                />
+                                >
+                                    <PartContent
+                                        item={part}
+                                        canUpdate={part.can.update}
+                                    />
+                                </ItemCard>
                             </li>
                         ))}
                     </ul>

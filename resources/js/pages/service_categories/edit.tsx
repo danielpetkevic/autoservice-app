@@ -1,5 +1,5 @@
 import FormCard from '@/components/forms/form-card';
-import CategoryFormInputs from '@/components/service-associated/category-form-inputs';
+import CategoryFormInputs from '@/components/service-associated/form-inputs/category-form-inputs';
 import { index, update } from '@/routes/service_categories';
 import { Form, Head } from '@inertiajs/react';
 import { Pencil } from 'lucide-react';

@@ -1,5 +1,5 @@
 import FormCard from '@/components/forms/form-card';
-import PartFormInputs from '@/components/service-associated/part-form-inputs';
+import PartFormInputs from '@/components/service-associated/form-inputs/part-form-inputs';
 import { index, update } from '@/routes/parts';
 import { Form, Head } from '@inertiajs/react';
 import { Package } from 'lucide-react';

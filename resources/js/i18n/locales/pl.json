@@ -4,7 +4,8 @@
         "vehicles": "Pojazdy",
         "services": "Usługi",
         "service_categories": "Kategorie usług",
-        "parts": "Części"
+        "parts": "Części",
+        "appointments": "Wizyty"
     },
     "services": {
         "title": "Zarządzanie usługami",
@@ -166,12 +167,19 @@
         "back_to_parts": "Wróć do części",
         "back_to_services": "Wróć do usług",
         "back_to_categories": "Wróć do kategorii",
+        "back_to_appointments": "Wróć do wizyt",
         "submit_changes": "Wyślij zmiany",
         "save_changes": "Zapisz zmiany",
         "create_category_button": "Utwórz kategorię",
         "create_part_button": "Utwórz część",
         "create_service_button": "Utwórz usługę",
-        "update_service_button": "Zaktualizuj usługę"
+        "update_service_button": "Zaktualizuj usługę",
+        "create_appointment": "Utwórz spotkanie",
+        "create_appointment_description": "Zaplanuj nowe spotkanie serwisowe dla swojego pojazdu.",
+        "create_appointment_button": "Utwórz Spotkanie",
+        "update_appointment": "Zaktualizuj Spotkanie",
+        "update_appointment_description": "Zaktualizuj dane swojego zaplanowanego spotkania serwisowego.",
+        "update_appointment_button": "Zaktualizuj Spotkanie"
     },
     "fields": {
         "brand": "Marka",
@@ -196,7 +204,12 @@
         "stock_quantity": "Ilość w magazynie",
         "quantity": "Ilość",
         "status": "Status",
-        "sku": "SKU"
+        "sku": "SKU",
+        "vehicle": "Pojazd",
+        "services": "Usługi",
+        "appointment_at": "Data i godzina wizyty",
+        "appointment_select_services_help": "Wybierz jedną lub kilka usług, które chcesz wykonać podczas wizyty.",
+        "notes": "Notatki"
     },
     "placeholders": {
         "email": "email@example.com",
@@ -216,7 +229,10 @@
         "license_plate": "ABC123",
         "vin": "JTDBR32E720123456",
         "mileage": "150000",
-        "passkey_name": "np. MacBook Pro, iPhone"
+        "passkey_name": "np. MacBook Pro, iPhone",
+        "select_vehicle": "Wybierz pojazd",
+        "appointment_notes": "Dodaj notatki lub szczegóły dotyczące wizyty...",
+        "select_date": "Wybierz datę i godzinę wizyty"
     },
     "listings": {
         "parts": "Części",
@@ -242,7 +258,21 @@
         "assigned_vehicles_description": "Przeglądaj pojazdy powiązane z przypisanymi naprawami.",
         "no_vehicles_found": "Nie znaleziono pojazdów.",
         "add_vehicle": "Dodaj pojazd",
-        "see_details": "Zobacz szczegóły"
+        "see_details": "Zobacz szczegóły",
+        "appointments": "Wizyty",
+        "appointments_description": "Przeglądaj i zarządzaj wszystkimi wizytami serwisowymi.",
+        "my_appointments": "Moje wizyty",
+        "my_appointments_description": "Przeglądaj i zarządzaj zaplanowanymi wizytami serwisowymi.",
+        "no_appointments": "Nie znaleziono wizyt.",
+        "create_appointment_empty": "Utwórz wizytę, aby zaplanować usługę.",
+        "add_appointment": "Dodaj wizytę",
+        "repair_orders": "Zamówienia naprawy",
+        "repair_orders_description": "Przeglądaj i zarządzaj wszystkimi zamówieniami naprawy.",
+        "my_repair_orders": "Moje zamówienia naprawy",
+        "my_repair_orders_description": "Przeglądaj i zarządzaj przypisanymi zamówieniami naprawy.",
+        "no_repair_orders": "Nie znaleziono zamówień naprawy.",
+        "create_repair_order_empty": "Utwórz zamówienie naprawy, aby śledzić usługę.",
+        "add_repair_order": "Dodaj zamówienie naprawy"
     },
     "vehicle": {
         "add_title": "Dodaj nowy pojazd",
@@ -341,7 +371,13 @@
         "vehicle_updated": "Pojazd zaktualizowany pomyślnie.",
         "vehicle_deleted": "Pojazd usunięty pomyślnie.",
         "profile_updated": "Profil zaktualizowany.",
-        "password_updated": "Hasło zaktualizowane."
+        "password_updated": "Hasło zaktualizowane.",
+        "appointment_created": "Wizyta utworzona pomyślnie.",
+        "appointment_updated": "Wizyta zaktualizowana pomyślnie.",
+        "appointment_deleted": "Wizyta usunięta pomyślnie.",
+        "appointment_status_updated": "Status wizyty zaktualizowany pomyślnie.",
+        "appointment_invalid_status": "Nieprawidłowy status wizyty.",
+        "appointment_has_repair_order": "Ta wizyta ma powiązane zlecenie naprawy i nie może zostać usunięta."
     },
     "appearance": {
         "light": "Jasny",
@@ -356,13 +392,23 @@
         "base_price": "Cena podstawowa",
         "activate": "Aktywuj",
         "deactivate": "Dezaktywuj",
-        "no_category": "Bez kategorii"
+        "no_category": "Bez kategorii",
+        "no_description": "Brak opisu",
+        "duration": "Czas trwania"
     },
     "category": {
         "description_help": "Opcjonalne. Opisz usługi objęte tę kategorią."
     },
     "part": {
         "description_help": "Opcjonalne. Opisz część."
+    },
+    "appointment": {
+        "scheduled": "Zaplanowana",
+        "completed": "Pojazd przyjęty",
+        "cancelled": "Anulowana",
+        "no_services": "Nie wybrano usług",
+        "complete": "Ukończ wizytę",
+        "cancel": "Anuluj wizytę"
     },
     "service": {
         "category_help": "Opcjonalne. Wybierz kategorię lub pozostaw usługę bez kategorii.",

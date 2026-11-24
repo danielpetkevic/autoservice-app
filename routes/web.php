@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ServiceCategoryController;
@@ -23,6 +24,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('parts', PartController::class)->except(['show']);
     Route::patch('/parts/{part}/stock', [PartController::class, 'updateStock'])
         ->name('parts.update-stock');
+    Route::resource('appointments', AppointmentController::class)->except(['show']);
+    Route::patch(
+        '/appointments/{appointment}/status',
+        [AppointmentController::class, 'updateStatus']
+    )->name('appointments.update-status');
+    Route::patch(
+        '/appointments/{appointment}/cancel',
+        [AppointmentController::class, 'cancelStatus']
+    )->name('appointments.cancel-status');
 });
 
 require __DIR__.'/settings.php';

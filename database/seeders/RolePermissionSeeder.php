@@ -25,9 +25,7 @@ class RolePermissionSeeder extends Seeder
             'appointments.create',
             'appointments.update',
             'appointments.cancel',
-            'appointments.confirm',
             'appointments.delete',
-            'appointments.select-services',
 
             // Repair orders
             'repair-orders.view',
@@ -103,7 +101,6 @@ class RolePermissionSeeder extends Seeder
             'appointments.create',
             'appointments.update',
             'appointments.cancel',
-            'appointments.select-services',
             'repair-orders.view',
             'service_categories.view',
             'services.viewActive',

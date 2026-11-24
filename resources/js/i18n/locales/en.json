@@ -4,7 +4,8 @@
         "vehicles": "Vehicles",
         "services": "Services",
         "service_categories": "Service Categories",
-        "parts": "Parts"
+        "parts": "Parts",
+        "appointments": "Appointments"
     },
     "services": {
         "title": "Service Management",
@@ -166,12 +167,19 @@
         "back_to_parts": "Back to parts",
         "back_to_services": "Back to services",
         "back_to_categories": "Back to categories",
+        "back_to_appointments": "Back to appointments",
         "submit_changes": "Submit Changes",
         "save_changes": "Save Changes",
         "create_category_button": "Create Category",
         "create_part_button": "Create Part",
         "create_service_button": "Create Service",
-        "update_service_button": "Update Service"
+        "update_service_button": "Update Service",
+        "create_appointment": "Create Appointment",
+        "create_appointment_description": "Schedule a new service appointment for your vehicle.",
+        "create_appointment_button": "Create Appointment",
+        "update_appointment": "Update Appointment",
+        "update_appointment_description": "Update the details of your scheduled service appointment.",
+        "update_appointment_button": "Update Appointment"
     },
     "fields": {
         "brand": "Brand",
@@ -196,7 +204,12 @@
         "status": "Status",
         "stock_quantity": "Stock Quantity",
         "vin_short": "VIN",
-        "year_short": "Year"
+        "year_short": "Year",
+        "vehicle": "Vehicle",
+        "services": "Services",
+        "appointment_at": "Appointment Date and Time",
+        "appointment_select_services_help": "Select one or more services you want to perform during the appointment.",
+        "notes": "Notes"
     },
     "placeholders": {
         "email": "email@example.com",
@@ -216,7 +229,10 @@
         "license_plate": "ABC123",
         "vin": "JTDBR32E720123456",
         "mileage": "150000",
-        "passkey_name": "e.g., MacBook Pro, iPhone"
+        "passkey_name": "e.g., MacBook Pro, iPhone",
+        "select_vehicle": "Select a vehicle",
+        "appointment_notes": "Add any notes or special instructions for the appointment...",
+        "select_date": "Select a date and time for the appointment"
     },
     "listings": {
         "parts": "Parts",
@@ -242,7 +258,21 @@
         "assigned_vehicles_description": "View vehicles associated with your assigned repairs.",
         "no_vehicles_found": "No vehicles found.",
         "add_vehicle": "Add Vehicle",
-        "see_details": "See Details"
+        "see_details": "See Details",
+        "appointments": "Appointments",
+        "appointments_description": "View and manage all service appointments.",
+        "my_appointments": "My Appointments",
+        "my_appointments_description": "View and manage your scheduled service appointments.",
+        "no_appointments": "No appointments found.",
+        "create_appointment_empty": "Create an appointment to schedule a service.",
+        "add_appointment": "Add Appointment",
+        "repair_orders": "Repair Orders",
+        "repair_orders_description": "View and manage all repair orders.",
+        "my_repair_orders": "My Repair Orders",
+        "my_repair_orders_description": "View and manage your assigned repair orders.",
+        "no_repair_orders": "No repair orders found.",
+        "create_repair_order_empty": "Create a repair order to track a service.",
+        "add_repair_order": "Add Repair Order"
     },
     "vehicle": {
         "add_title": "Add New Vehicle",
@@ -341,7 +371,13 @@
         "vehicle_updated": "Vehicle updated successfully.",
         "vehicle_deleted": "Vehicle deleted successfully.",
         "profile_updated": "Profile updated.",
-        "password_updated": "Password updated."
+        "password_updated": "Password updated.",
+        "appointment_created": "Appointment created successfully.",
+        "appointment_updated": "Appointment updated successfully.",
+        "appointment_deleted": "Appointment deleted successfully.",
+        "appointment_status_updated": "Appointment status updated successfully.",
+        "appointment_invalid_status": "Invalid appointment status.",
+        "appointment_has_repair_order": "This appointment has a repair order associated with it and cannot be deleted."
     },
     "appearance": {
         "light": "Light",
@@ -359,6 +395,14 @@
     "part": {
         "description_help": "Optional. Describe the part."
     },
+    "appointment": {
+        "scheduled": "Scheduled",
+        "completed": "Vehicle arrived",
+        "cancelled": "Cancelled",
+        "no_services": "No services selected",
+        "complete": "Complete appointment",
+        "cancel": "Cancel appointment"
+    },
     "inventory": {
         "activate": "Activate",
         "base_price": "Base price",
@@ -367,6 +411,8 @@
         "low_stock": "Low Stock",
         "no_category": "No category",
         "out_of_stock": "Out of Stock",
-        "unit_price": "Unit price"
+        "unit_price": "Unit price",
+        "no_description": "No description",
+        "duration": "Duration"
     }
 }

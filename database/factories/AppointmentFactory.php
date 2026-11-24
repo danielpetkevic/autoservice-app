@@ -21,7 +21,7 @@ class AppointmentFactory extends Factory
             'vehicle_id' => 1,
             'user_id' => 1,
             'appointment_at' => $this->faker->dateTimeBetween('+1 day', '+1 month'),
-            'status' => $this->faker->randomElement(['pending', 'confirmed', 'completed', 'cancelled']),
+            'status' => $this->faker->randomElement(['scheduled', 'completed', 'cancelled']),
             'notes' => $this->faker->optional()->randomElement([
                 'Customer reports a warning light on the dashboard.',
                 'Please inspect the brakes and suspension.',

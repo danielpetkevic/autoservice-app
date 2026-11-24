@@ -5,3 +5,4 @@ export type * from './service-category';
 export type * from './service';
 export type * from './vehicle';
 export type * from './part';
+export type * from './appointment';

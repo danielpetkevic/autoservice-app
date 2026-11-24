@@ -8,6 +8,7 @@ import {
 } from '@/routes/services';
 import type { Service } from '@/types/service';
 import { useTranslation } from 'react-i18next';
+import ServiceContent from '../../components/service-associated/cards/service-content';
 
 interface Props {
     services: { data: Service[] };
@@ -27,7 +28,7 @@ export default function ServicesIndex({
     const { t } = useTranslation();
     return (
         <>
-            <Head title={header} />
+            <Head title={t(header)} />
 
             <div className="space-y-8 p-6">
                 <header className="flex items-center justify-between gap-4">
@@ -65,12 +66,15 @@ export default function ServicesIndex({
                         {services.data.map((service) => (
                             <li key={service.id}>
                                 <ItemCard
-                                    item={service}
                                     editUrl={serviceEdit.url(service.id)}
                                     deleteUrl={serviceDestroy.url(service.id)}
-                                    type="service"
                                     can={service.can}
-                                />
+                                >
+                                    <ServiceContent
+                                        item={service}
+                                        canUpdate={service.can.update}
+                                    />
+                                </ItemCard>
                             </li>
                         ))}
                     </ul>

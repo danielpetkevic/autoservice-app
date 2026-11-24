@@ -1,5 +1,5 @@
 import FormCard from '@/components/forms/form-card';
-import ServiceFormInputs from '@/components/service-associated/service-form-inputs';
+import ServiceFormInputs from '@/components/service-associated/form-inputs/service-form-inputs';
 import type { ServiceCategory } from '@/types';
 import { index, store } from '@/routes/services';
 import { Form, Head } from '@inertiajs/react';

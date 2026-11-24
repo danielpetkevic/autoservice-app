@@ -3,11 +3,20 @@
 namespace App\Models;
 
 use Database\Factories\AppointmentFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
+#[Fillable([
+    'user_id',
+    'vehicle_id',
+    'appointment_at',
+    'status',
+    'notes',
+])]
 
 class Appointment extends Model
 {

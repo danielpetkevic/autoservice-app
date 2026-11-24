@@ -26,12 +26,6 @@ class AppointmentPolicy
             return $appointment->user_id === $user->id;
         }
 
-        if ($user->hasRole('mechanic')) {
-            return $appointment->repairOrder()
-                ->where('mechanic_id', $user->id)
-                ->exists();
-        }
-
         return false;
     }
 
@@ -52,7 +46,7 @@ class AppointmentPolicy
 
         return $user->hasRole('client')
             && $appointment->user_id === $user->id
-            && $appointment->status === 'pending'
+            && $appointment->status === 'scheduled'
             && ! $appointment->repairOrder()->exists();
     }
 
@@ -63,22 +57,12 @@ class AppointmentPolicy
         }
 
         if ($user->hasRole('admin')) {
-            return ! in_array($appointment->status, [
-                'completed',
-                'cancelled',
-            ], true);
+            return $appointment->status === 'scheduled';
         }
 
         return $user->hasRole('client')
             && $appointment->user_id === $user->id
-            && $appointment->status === 'pending'
-            && ! $appointment->repairOrder()->exists();
-    }
-
-    public function confirm(User $user, Appointment $appointment): bool
-    {
-        return $user->can('appointments.confirm')
-            && $appointment->status === 'pending'
+            && $appointment->status === 'scheduled'
             && ! $appointment->repairOrder()->exists();
     }
 
@@ -101,7 +85,12 @@ class AppointmentPolicy
 
         return $user->hasRole('client')
             && $appointment->user_id === $user->id
-            && $appointment->status === 'pending'
+            && $appointment->status === 'scheduled'
             && ! $appointment->repairOrder()->exists();
+    }
+
+    public function manageStatus(User $user, Appointment $appointment): bool
+    {
+        return $user->hasRole('admin');
     }
 }
